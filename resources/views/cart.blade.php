@@ -90,7 +90,7 @@
                                 </div>
                             </td>
                             <td>
-                                <h5>${{ number_format($item->product->price, 2) }}</h5>
+                                <h5>{{ app()->getLocale() === 'ar' ? number_format($item->product->price, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->product->price, 2) }}</h5>
                             </td>
                             <td>
                                 <form action="{{ route('cart.update', $item) }}" method="POST"
@@ -109,7 +109,7 @@
                                 </form>
                             </td>
                             <td>
-                                <h5>${{ number_format($item->product->price * $item->quantity, 2) }}</h5>
+                                <h5>{{ app()->getLocale() === 'ar' ? number_format($item->product->price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->product->price * $item->quantity, 2) }}</h5>
                             </td>
                         </tr>
                         @endif
@@ -121,21 +121,21 @@
                             <td></td>
                             <td></td>
                             <td><h5>Subtotal</h5></td>
-                            <td><h5>${{ number_format($total, 2) }}</h5></td>
+                            <td><h5>{{ app()->getLocale() === 'ar' ? number_format($total, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total, 2) }}</h5></td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td><h5>Shipping</h5></td>
-                            <td><h5>${{ number_format($shipping, 2) }}</h5></td>
+                            <td><h5>{{ app()->getLocale() === 'ar' ? number_format($shipping, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($shipping, 2) }}</h5></td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td><h5><strong>Total</strong></h5></td>
-                            <td><h5><strong>${{ number_format($total + $shipping, 2) }}</strong></h5></td>
+                            <td><h5><strong>{{ app()->getLocale() === 'ar' ? number_format($total + $shipping, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total + $shipping, 2) }}</strong></h5></td>
                         </tr>
 
                         {{-- Buttons --}}

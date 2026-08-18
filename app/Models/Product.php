@@ -45,6 +45,16 @@ class Product extends Model
         });
     }
 
+    public function getNameAttribute(): string
+    {
+        return app()->getLocale() === 'ar' ? ($this->name_ar ?: $this->name_en) : ($this->name_en ?: $this->name_ar);
+    }
+
+    public function getDescriptionAttribute(): ?string
+    {
+        return app()->getLocale() === 'ar' ? ($this->desc_ar ?: $this->desc_en) : ($this->desc_en ?: $this->desc_ar);
+    }
+
     public function toSearchableArray(): array
     {
         return [

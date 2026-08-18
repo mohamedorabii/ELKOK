@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="icon" href="{{ asset('new-template/img/favicon.png') }}" type="image/png" />
-    <title>@yield('title', 'OrabyStore')</title>
+    <title>@yield('title', __('store.app_name'))</title>
 
     <link rel="stylesheet" href="{{ asset('new-template/css/bootstrap.css') }}" />
     <link rel="stylesheet" href="{{ asset('new-template/vendors/linericon/style.css') }}" />
@@ -19,10 +20,11 @@
     <link rel="stylesheet" href="{{ asset('new-template/css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('new-template/css/responsive.css') }}" />
     <link rel="stylesheet" href="{{ asset('new-template/css/main.css') }}" />
-
+    <link rel="stylesheet" href="{{ asset('new-template/css/rtl.css') }}" />
     @stack('styles')
 </head>
-<body>
+
+<body class="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
     @include('layouts.navbar')
 
@@ -48,4 +50,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

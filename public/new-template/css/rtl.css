@@ -1,0 +1,79 @@
+/* ===============================
+   RTL Overrides
+   =============================== */
+body.rtl {
+    direction: rtl;
+    text-align: right;
+}
+body.rtl .text-left { text-align: right !important; }
+body.rtl .text-right { text-align: left !important; }
+body.rtl .float-left { float: right !important; }
+body.rtl .float-right { float: left !important; }
+body.rtl .mr-2 { margin-right: 0 !important; margin-left: .5rem !important; }
+body.rtl .mr-3 { margin-right: 0 !important; margin-left: 1rem !important; }
+body.rtl .mr-4 { margin-right: 0 !important; margin-left: 1.5rem !important; }
+body.rtl .ml-2 { margin-left: 0 !important; margin-right: .5rem !important; }
+body.rtl .ml-3 { margin-left: 0 !important; margin-right: 1rem !important; }
+body.rtl .ml-4 { margin-left: 0 !important; margin-right: 1.5rem !important; }
+body.rtl .justify-content-between { justify-content: space-between; }
+body.rtl .pull-right { float: left !important; }
+body.rtl .pull-left { float: right !important; }
+body.rtl .top_menu .row,
+body.rtl .main_menu .row,
+body.rtl .banner_content,
+body.rtl .banner_content .col-lg-12 {
+    direction: rtl;
+    text-align: left !important;
+}
+body.rtl .home_banner_area .banner_content,
+body.rtl .home_banner_area .banner_content .sub,
+body.rtl .home_banner_area .banner_content h3 {
+    text-align: left !important;
+}
+body.rtl .page_link a + a::before {
+    content: '←';
+    margin: 0 8px;
+}
+
+/* ===== Header & Search fixes ===== */
+body.rtl .search-wrapper form {
+    padding: 0 16px 0 12px;
+}
+body.rtl #search-dropdown {
+    left: auto;
+    right: 0;
+}
+body.rtl .header_area .navbar .nav .nav-item {
+    margin-right: 0px;
+    margin-left: 45px;
+}
+body.rtl .header_area .navbar .nav .nav-item:last-child {
+    margin-left: 0px;
+}
+body.rtl .header_area .navbar .nav.navbar-nav.navbar-right li {
+    margin-left: 0px;
+    margin-right: 25px;
+}
+body.rtl .header_area .navbar .nav.navbar-nav.navbar-right li:first-child {
+    margin-right: 35px;
+}
+body.rtl .header_area .navbar .icons {
+    margin-left: 0px;
+    margin-right: 20px;
+}
+body.rtl .top_menu .right_side li a {
+    border-right: 0;
+    border-left: 1px solid #797979;
+}
+body.rtl .top_menu .right_side li:last-child a {
+    padding-left: 15px;
+    padding-right: 19px;
+    border-left: 0;
+}
+body.rtl .top_menu .float-left p {
+    border-right: 0;
+    border-left: 1px solid #797979;
+}
+body.rtl .top_menu .float-left p:last-child {
+    border-left: 0;
+}

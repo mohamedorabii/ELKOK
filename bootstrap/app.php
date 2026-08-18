@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\PreventAdminActions;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -26,11 +27,11 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'admin' => AdminMiddleware::class,
+            'preventAdmin' => PreventAdminActions::class,
+            'locale' => SetLocale::class,
         ]);
 
-        $middleware->alias([
-            'preventAdmin' => PreventAdminActions::class,
-        ]);
+        $middleware->web(append: [SetLocale::class]);
     })
 
     ->withExceptions(function (Exceptions $exceptions): void {

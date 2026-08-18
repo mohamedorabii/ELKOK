@@ -5,39 +5,37 @@
 
             {{-- About --}}
             <div class="col-lg-4 col-md-6 single-footer-widget">
-                <h4>About OrabyStore</h4>
+                <h4>{{ __('store.pages.footer.about_title') }}</h4>
 
                 <p>
-                    OrabyStore is a modern e-commerce platform built with Laravel,
-                    providing a secure, fast and user-friendly online shopping
-                    experience.
+                    {{ __('store.pages.footer.about_text') }}
                 </p>
 
                 <p class="mt-3">
-                    Developed by <strong>Mohamed Alaa Oraby</strong>
+                    {{ __('store.pages.footer.developer') }} <strong>Mohamed Alaa Oraby</strong>
                 </p>
             </div>
 
             {{-- Quick Links --}}
             <div class="col-lg-2 col-md-6 single-footer-widget">
-                <h4>Quick Links</h4>
+                <h4>{{ __('store.pages.footer.quick_links') }}</h4>
 
                 <ul>
                     <li>
-                        <a href="{{ route('home') }}">Home</a>
+                        <a href="{{ route('home') }}">{{ __('store.nav.home') }}</a>
                     </li>
 
                     <li>
-                        <a href="{{ route('products') }}">Products</a>
+                        <a href="{{ route('products') }}">{{ __('store.nav.products') }}</a>
                     </li>
 
                     <li>
-                        <a href="{{ route('contact') }}">Contact</a>
+                        <a href="{{ route('contact') }}">{{ __('store.nav.contact') }}</a>
                     </li>
 
                     @auth
                         <li>
-                            <a href="{{ route('orders.index') }}">My Orders</a>
+                            <a href="{{ route('orders.index') }}">{{ __('store.nav.my_orders') }}</a>
                         </li>
                     @endauth
                 </ul>
@@ -45,30 +43,30 @@
 
             {{-- Shop --}}
             <div class="col-lg-3 col-md-6 single-footer-widget">
-                <h4>Shop</h4>
+                <h4>{{ __('store.pages.footer.shop') }}</h4>
 
                 <ul>
                     <li>
-                        <a href="{{ route('categories') }}">Categories</a>
+                        <a href="{{ route('categories') }}">{{ __('store.nav.categories') }}</a>
                     </li>
 
                     <li>
-                        <a href="{{ route('subcategories') }}">Subcategories</a>
+                        <a href="{{ route('subcategories') }}">{{ __('store.nav.subcategories') }}</a>
                     </li>
 
                     <li>
-                        <a href="{{ route('brands') }}">Brands</a>
+                        <a href="{{ route('brands') }}">{{ __('store.nav.brands') }}</a>
                     </li>
 
                     <li>
-                        <a href="{{ route('cart.index') }}">Cart</a>
+                        <a href="{{ route('cart.index') }}">{{ __('store.nav.cart') }}</a>
                     </li>
                 </ul>
             </div>
 
             {{-- Contact --}}
             <div class="col-lg-3 col-md-6 single-footer-widget">
-                <h4>Contact</h4>
+                <h4>{{ __('store.pages.footer.contact') }}</h4>
 
                 <p>
                     <i class="fa fa-phone mr-2"></i>
@@ -96,8 +94,8 @@
             <div class="col-lg-6 col-md-12">
                 <p class="footer-text mb-0">
                     © {{ date('Y') }}
-                    <strong>OrabyStore</strong>.
-                    All rights reserved.
+                    <strong>{{ __('store.app_name') }}</strong>.
+                    {{ __('store.pages.footer.all_rights') }}
                 </p>
             </div>
 

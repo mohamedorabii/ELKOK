@@ -31,6 +31,11 @@ class Subcategory extends Model
             }
         });
     }
+    public function getNameAttribute(): string
+    {
+        return app()->getLocale() === 'ar' ? ($this->name_ar ?: $this->name_en) : ($this->name_en ?: $this->name_ar);
+    }
+
     public function toSearchableArray(): array
     {
         return [

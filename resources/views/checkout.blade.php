@@ -107,7 +107,7 @@
                             @if($item->product)
                             <li class="d-flex justify-content-between">
                                 <span>{{ $item->product->name_en }} x{{ $item->quantity }}</span>
-                                <span>${{ number_format($item->product->price * $item->quantity, 2) }}</span>
+                                <span>{{ app()->getLocale() === 'ar' ? number_format($item->product->price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->product->price * $item->quantity, 2) }}</span>
                             </li>
                             @endif
                             @endforeach
@@ -117,15 +117,15 @@
                         <ul class="list list_2">
                             <li class="d-flex justify-content-between">
                                 <span>Subtotal</span>
-                                <span>${{ number_format($subtotal, 2) }}</span>
+                                <span>{{ app()->getLocale() === 'ar' ? number_format($subtotal, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($subtotal, 2) }}</span>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <span>Shipping</span>
-                                <span>${{ number_format($shipping, 2) }}</span>
+                                <span>{{ app()->getLocale() === 'ar' ? number_format($shipping, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($shipping, 2) }}</span>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <span><strong>Total</strong></span>
-                                <span><strong>${{ number_format($total, 2) }}</strong></span>
+                                <span><strong>{{ app()->getLocale() === 'ar' ? number_format($total, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total, 2) }}</strong></span>
                             </li>
                         </ul>
 

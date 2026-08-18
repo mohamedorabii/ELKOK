@@ -1,26 +1,23 @@
 @extends('layouts.parent')
 
-@section('title', 'Register - OrabyStore')
+@section('title', __('store.pages.auth.create_account') . ' - ' . __('store.app_name'))
 
 @section('content')
 
-
-
-{{-- Register Section --}}
 <section class="section_gap">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-8">
                 <div class="login-card">
 
-                    <h3 class="text-center mb-2">Create Account</h3>
-                    <p class="text-center mb-4">Register now to start shopping and save your orders.</p>
+                    <h3 class="text-center mb-2">{{ __('store.pages.auth.create_account') }}</h3>
+                    <p class="text-center mb-4">{{ __('store.pages.auth.register_to_continue') }}</p>
 
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="form-group mb-3">
-                            <label>Name</label>
+                            <label>{{ __('store.pages.auth.name') }}</label>
                             <input type="text" name="name"
                                 class="form-control @error('name') is-invalid @enderror"
                                 value="{{ old('name') }}" required autofocus>
@@ -30,7 +27,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label>Email Address</label>
+                            <label>{{ __('store.pages.auth.email') }}</label>
                             <input type="email" name="email"
                                 class="form-control @error('email') is-invalid @enderror"
                                 value="{{ old('email') }}" required>
@@ -40,7 +37,7 @@
                         </div>
 
                         <div class="form-group mb-3">
-                            <label>Password</label>
+                            <label>{{ __('store.pages.auth.password') }}</label>
                             <input type="password" name="password"
                                 class="form-control @error('password') is-invalid @enderror"
                                 required>
@@ -50,25 +47,24 @@
                         </div>
 
                         <div class="form-group mb-4">
-                            <label>Confirm Password</label>
+                            <label>{{ __('store.pages.auth.confirm_password') }}</label>
                             <input type="password" name="password_confirmation"
                                 class="form-control" required>
                         </div>
 
-                        <button type="submit" class="main_btn">REGISTER</button>
-
+                        <button type="submit" class="main_btn">{{ strtoupper(__('store.pages.auth.register')) }}</button>
                     </form>
 
-                    <div class="divider">─── OR ───</div>
+                    <div class="divider">─── {{ strtoupper(__('store.common.or')) }} ───</div>
 
                     <a href="{{ url('/auth/google/redirect') }}" class="google-btn">
-                        <i class="fa fa-google"></i> Register with Google
+                        <i class="fa fa-google"></i> {{ __('store.pages.auth.register_with_google') }}
                     </a>
 
                     @if(Route::has('login'))
                     <p class="register-link">
-                        Already have an account?
-                        <a href="{{ route('login') }}">Login</a>
+                        {{ __('store.pages.auth.already_have_account') }}
+                        <a href="{{ route('login') }}">{{ __('store.pages.auth.login') }}</a>
                     </p>
                     @endif
 

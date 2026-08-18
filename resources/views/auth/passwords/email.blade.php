@@ -1,6 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'Forgot Password - OrabyStore')
+@section('title', __('store.pages.auth.forgot_title') . ' - ' . __('store.app_name'))
 
 @section('content')
 
@@ -10,8 +10,8 @@
             <div class="col-lg-5 col-md-8">
                 <div class="login-card">
 
-                    <h3 class="text-center mb-2">Forgot Password?</h3>
-                    <p class="text-center mb-4">Enter your email and we will send you a verification code.</p>
+                    <h3 class="text-center mb-2">{{ __('store.pages.auth.forgot_title') }}</h3>
+                    <p class="text-center mb-4">{{ __('store.pages.auth.forgot_hint') }}</p>
 
                     @if(session('status'))
                         <div class="alert alert-success mb-4">{{ session('status') }}</div>
@@ -25,7 +25,7 @@
                         @csrf
 
                         <div class="form-group mb-4">
-                            <label>Email Address</label>
+                            <label>{{ __('store.pages.auth.email') }}</label>
                             <input type="email" name="email"
                                 class="form-control @error('email') is-invalid @enderror"
                                 value="{{ old('email') }}"
@@ -36,14 +36,14 @@
                         </div>
 
                         <button type="submit" class="main_btn w-100">
-                            Send Verification Code
+                            {{ __('store.pages.auth.send_code') }}
                         </button>
 
                     </form>
 
                     <p class="register-link mt-3 text-center">
-                        Remember your password?
-                        <a href="{{ route('login') }}">Back to Login</a>
+                        {{ __('store.pages.auth.remember_me') }}
+                        <a href="{{ route('login') }}">{{ __('store.pages.auth.back_to_login') }}</a>
                     </p>
 
                 </div>

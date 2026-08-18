@@ -19,6 +19,19 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
+Route::get('/language/{locale}', function (string $locale) {
+    $allowedLocales = ['en', 'ar'];
+
+    if (! in_array($locale, $allowedLocales, true)) {
+        $locale = config('app.locale');
+    }
+
+    session()->put('locale', $locale);
+    app()->setLocale($locale);
+
+    return redirect()->back();
+})->name('language.switch');
+
 /*
 |--------------------------------------------------------------------------
 | 🌐 Social Login

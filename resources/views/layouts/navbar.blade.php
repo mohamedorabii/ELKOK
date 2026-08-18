@@ -4,21 +4,23 @@
             <div class="row">
                 <div class="col-lg-7">
                     <div class="float-left">
-                        <p>Phone: +201281856592</p>
-                        <p>email: devmohamedalaaoraby@gmail.com</p>
+                        <p>{{ __('store.pages.contact.phone') }}: +201281856592</p>
+                        <p>{{ __('store.common.email') }}: devmohamedalaaoraby@gmail.com</p>
                     </div>
                 </div>
 
                 <div class="col-lg-5">
                     <div class="float-right">
                         <ul class="right_side">
-                            <li><a href="{{ route('cart.index') }}">Cart</a></li>
-                            <li><a href="{{ route('contact') }}">Contact Us</a></li>
+                            <li><a href="{{ route('cart.index') }}">{{ __('store.nav.cart') }}</a></li>
+                            <li><a href="{{ route('contact') }}">{{ __('store.nav.contact') }}</a></li>
+                            <li>
+                                <a href="{{ route('language.switch', ['locale' => app()->getLocale() === 'en' ? 'ar' : 'en']) }}">
+                                    {{ app()->getLocale() === 'en' ? __('store.switch_to_ar') : __('store.switch_to_en') }}
+                                </a>
+                            </li>
 
-                            @guest
-                                <li><a href="{{ route('login') }}">Login</a></li>
-                                <li><a href="{{ route('register') }}">Register</a></li>
-                            @endguest
+                            
                         </ul>
                     </div>
                 </div>
@@ -54,7 +56,7 @@
 
                                 <li class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ route('home') }}">
-                                        Home
+                                        {{ __('store.nav.home') }}
                                     </a>
                                 </li>
 
@@ -62,31 +64,31 @@
                                     class="nav-item submenu dropdown {{ request()->routeIs('products*', 'categories*', 'subcategories*', 'brands*') ? 'active' : '' }}">
 
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                        Shop
+                                        {{ __('store.nav.shop') }}
                                     </a>
 
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('categories') }}">
-                                                Categories
+                                                {{ __('store.nav.categories') }}
                                             </a>
                                         </li>
 
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('subcategories') }}">
-                                                Subcategories
+                                                {{ __('store.nav.subcategories') }}
                                             </a>
                                         </li>
 
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('products') }}">
-                                                Products
+                                                {{ __('store.nav.products') }}
                                             </a>
                                         </li>
 
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{ route('brands') }}">
-                                                Brands
+                                                {{ __('store.nav.brands') }}
                                             </a>
                                         </li>
                                     </ul>
@@ -95,14 +97,14 @@
 
                                 <li class="nav-item {{ request()->routeIs('contact') ? 'active' : '' }}">
                                     <a class="nav-link" href="{{ route('contact') }}">
-                                        Contact
+                                        {{ __('store.nav.contact') }}
                                     </a>
                                 </li>
 
                                 @auth
                                     <li class="nav-item {{ request()->routeIs('orders.index') ? 'active' : '' }}">
                                         <a class="nav-link" href="{{ route('orders.index') }}">
-                                            My Orders
+                                            {{ __('store.nav.my_orders') }}
                                         </a>
                                     </li>
                                 @endauth
@@ -125,7 +127,7 @@
                                         <form action="{{ route('search') }}" method="GET">
 
                                             <input type="text" id="live-search-input" name="q"
-                                                placeholder="Search..." autocomplete="off" value="{{ request('q') }}">
+                                                placeholder="{{ __('store.search_placeholder') }}" autocomplete="off" value="{{ request('q') }}">
 
                                             <button type="submit">
                                                 <i class="ti-search"></i>
@@ -139,7 +141,7 @@
 
                                             <div id="search-all">
                                                 <a href="#" id="search-all-link">
-                                                    View all results
+                                                    {{ __('store.view_all_results') }}
                                                 </a>
                                             </div>
 
@@ -175,7 +177,7 @@
                                             @if (Auth::user()->is_admin)
                                                 <li>
                                                     <a href="{{ url('/admin') }}">
-                                                        Dashboard
+                                                        {{ __('store.nav.dashboard') }}
                                                     </a>
                                                 </li>
                                             @endif
@@ -185,7 +187,7 @@
                                                 <a href="{{ route('logout') }}"
                                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 
-                                                    Logout
+                                                    {{ __('store.nav.logout') }}
 
                                                 </a>
 

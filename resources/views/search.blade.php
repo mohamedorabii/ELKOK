@@ -53,7 +53,7 @@
                                 <h4>{{ $product->name_en }}</h4>
                             </a>
                             <div class="mt-3">
-                                <span class="mr-4">${{ $product->price }}</span>
+                                <span class="mr-4">{{ app()->getLocale() === 'ar' ? number_format($product->price, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($product->price, 2) }}</span>
                             </div>
                         </div>
                     </div>

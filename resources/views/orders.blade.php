@@ -155,7 +155,7 @@
                                     <small class="text-muted d-block">Shipping</small>
 
                                     <strong>
-                                        ${{ number_format($order->shipping_price,2) }}
+                                        {{ app()->getLocale() === 'ar' ? number_format($order->shipping_price, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($order->shipping_price, 2) }}
                                     </strong>
                                 </div>
 
@@ -163,7 +163,7 @@
                                     <small class="text-muted d-block">Total</small>
 
                                     <strong class="text-success">
-                                        ${{ number_format($order->total_price,2) }}
+                                        {{ app()->getLocale() === 'ar' ? number_format($order->total_price, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($order->total_price, 2) }}
                                     </strong>
                                 </div>
 
@@ -207,7 +207,7 @@
 
                                                     <strong class="text-success">
 
-                                                        ${{ number_format($item->product->price * $item->quantity,2) }}
+                                                        {{ app()->getLocale() === 'ar' ? number_format($item->product->price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->product->price * $item->quantity, 2) }}
 
                                                     </strong>
 
