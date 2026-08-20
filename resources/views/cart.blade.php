@@ -86,18 +86,21 @@
                                     </div>
                                     <div class="media-body align-self-center">
                                         <p>{{ $item->product->name_en }}</p>
+                                        @if ($item->variant_label)
+                                            <small class="text-muted d-block">{{ $item->variant_label }}</small>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                <h5>{{ app()->getLocale() === 'ar' ? number_format($item->product->price, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->product->price, 2) }}</h5>
+                                <h5>{{ app()->getLocale() === 'ar' ? number_format($item->unit_price, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->unit_price, 2) }}</h5>
                             </td>
                             <td>
                                 <form action="{{ route('cart.update', $item) }}" method="POST"
                                       class="d-flex align-items-center">
                                     @csrf
                                     <div class="product_count">
-                                        <input type="number" name="quantity" min="1" max="{{ $item->product->quantity }}"
+                                        <input type="number" name="quantity" min="1" max="{{ $item->available_stock }}"
                                                value="{{ $item->quantity }}"
                                                class="input-text qty"
                                                style="width:75px;">
@@ -109,7 +112,7 @@
                                 </form>
                             </td>
                             <td>
-                                <h5>{{ app()->getLocale() === 'ar' ? number_format($item->product->price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->product->price * $item->quantity, 2) }}</h5>
+                                <h5>{{ app()->getLocale() === 'ar' ? number_format($item->unit_price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->unit_price * $item->quantity, 2) }}</h5>
                             </td>
                         </tr>
                         @endif

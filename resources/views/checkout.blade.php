@@ -106,8 +106,14 @@
                             @foreach($cartItems as $item)
                             @if($item->product)
                             <li class="d-flex justify-content-between">
-                                <span>{{ $item->product->name_en }} x{{ $item->quantity }}</span>
-                                <span>{{ app()->getLocale() === 'ar' ? number_format($item->product->price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->product->price * $item->quantity, 2) }}</span>
+                                <span>
+                                    {{ $item->product->name_en }}
+                                    @if ($item->variant_label)
+                                        - {{ $item->variant_label }}
+                                    @endif
+                                    x{{ $item->quantity }}
+                                </span>
+                                <span>{{ app()->getLocale() === 'ar' ? number_format($item->unit_price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->unit_price * $item->quantity, 2) }}</span>
                             </li>
                             @endif
                             @endforeach

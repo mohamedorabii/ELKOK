@@ -21,6 +21,9 @@ class ProductInfolist
                     ->label('Image')
                     ->disk('public')                  
                     ->default('products/default.png'),
+                TextEntry::make('stock_quantity')
+                    ->label('Available Stock')
+                    ->numeric(),
                 TextEntry::make('desc_en')
                     ->placeholder('-')
                     ->columnSpanFull(),

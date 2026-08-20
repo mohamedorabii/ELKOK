@@ -2,11 +2,12 @@
 
 namespace App\Filament\Resources\Products\Schemas;
 
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\FileUpload;
 
 class ProductForm
 {
@@ -33,6 +34,23 @@ class ProductForm
                     ->image()
                     ->default('products/default.png')
                     ->required(),
+                Repeater::make('images')
+                    ->relationship()
+                    ->label('Gallery Images')
+                    ->defaultItems(0)
+                    ->schema([
+                        FileUpload::make('image')
+                            ->label('Image')
+                            ->disk('public')
+                            ->directory('products/gallery')
+                            ->image()
+                            ->required(),
+                        TextInput::make('sort_order')
+                            ->label('Sort Order')
+                            ->numeric()
+                            ->default(0),
+                    ])
+                    ->columnSpanFull(),
                 Textarea::make('desc_en')
                     ->default(null)
                     ->columnSpanFull(),
@@ -61,7 +79,38 @@ class ProductForm
                 Select::make('category_id')
                     ->label('Category')
                     ->relationship('category', 'name_en')
-                    ->required()
+                    ->required(),
+                Repeater::make('variants')
+                    ->relationship()
+                    ->label('Variants')
+                    ->defaultItems(0)
+                    ->schema([
+                        Select::make('color_id')
+                            ->label('Color')
+                            ->relationship('color', 'name_en')
+                            ->searchable()
+                            ->required(),
+                        Select::make('size_id')
+                            ->label('Size')
+                            ->relationship('size', 'name_en')
+                            ->searchable()
+                            ->required(),
+                        TextInput::make('stock')
+                            ->label('Stock')
+                            ->numeric()
+                            ->minValue(0)
+                            ->default(0)
+                            ->required(),
+                        TextInput::make('price')
+                            ->label('Price')
+                            ->numeric()
+                            ->minValue(0)
+                            ->prefix('$'),
+                        TextInput::make('sku')
+                            ->label('SKU')
+                            ->maxLength(255),
+                    ])
+                    ->columnSpanFull()
             ]);
     }
 }

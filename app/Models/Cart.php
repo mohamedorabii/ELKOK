@@ -10,6 +10,7 @@ class Cart extends Model
         'user_id',
         'session_id',
         'product_id',
+        'variant_id',
         'quantity',
     ];
     
@@ -21,5 +22,29 @@ class Cart extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function variant()
+    {
+        return $this->belongsTo(ProductVariant::class, 'variant_id');
+    }
+
+    public function getUnitPriceAttribute(): float
+    {
+        return (float) ($this->variant?->effective_price ?? $this->product?->price ?? 0);
+    }
+
+    public function getAvailableStockAttribute(): int
+    {
+        if ($this->variant) {
+            return (int) $this->variant->stock;
+        }
+
+        return (int) ($this->product?->stock_quantity ?? 0);
+    }
+
+    public function getVariantLabelAttribute(): ?string
+    {
+        return $this->variant?->variant_label;
     }
 }

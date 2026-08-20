@@ -20,6 +20,7 @@ class HomeService
     public function getLatestProducts(int $limit = 6)
     {
         return Product::where('status', 1)
+            ->with(['variants'])
             ->whereHas('category', fn($q) => $q->where('status', 1))
             ->latest()
             ->take($limit)
@@ -29,6 +30,7 @@ class HomeService
     public function getProductsByCategory(?int $categoryId = null, int $limit = 6)
     {
         $query = Product::where('status', 1)
+            ->with(['variants'])
             ->whereHas('category', fn($q) => $q->where('status', 1))
             ->latest()
             ->take($limit);

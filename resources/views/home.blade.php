@@ -105,7 +105,7 @@
                                 <img class="img-fluid w-100" src="{{ asset('storage/' . $product->image) }}"
                                     alt="{{ $product->name }}" />
 
-                                @if ($product->quantity > 0)
+                                @if ($product->stock_quantity > 0)
                                     <span class="badge badge-success"
                                         style="position:absolute;top:10px;left:10px;font-size:13px;padding:6px 12px;border-radius:20px;">
                                         {{ __('store.common.in_stock') }}
@@ -124,7 +124,7 @@
                                         <i class="ti-eye"></i>
                                     </a>
 
-                                    @if ($product->quantity > 0)
+                                    @if (! $product->has_variants && $product->stock_quantity > 0)
                                         <a href="#" class="cart-trigger" data-form="cart-form-{{ $product->id }}"
                                             title="{{ __('store.common.add_to_cart') }}">
                                             <i class="ti-shopping-cart"></i>
@@ -146,9 +146,9 @@
                                         {{ app()->getLocale() === 'ar' ? number_format($product->price, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($product->price, 2) }}
                                     </span>
 
-                                    @if ($product->quantity > 0)
+                                    @if ($product->stock_quantity > 0)
                                         <small class="text-success">
-                                            {{ $product->quantity }} {{ __('store.common.left') }}
+                                            {{ $product->stock_quantity }} {{ __('store.common.left') }}
                                         </small>
                                     @else
                                         <small class="text-danger">

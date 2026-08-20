@@ -190,6 +190,11 @@
                                                     {{ optional($item->product)->name_en ?? 'Product Removed' }}
                                                 </strong>
 
+                                                @if($item->variant_label)
+                                                    <br>
+                                                    <small class="text-muted">{{ $item->variant_label }}</small>
+                                                @endif
+
                                                 <br>
 
                                                 <small class="text-muted">
@@ -207,7 +212,7 @@
 
                                                     <strong class="text-success">
 
-                                                        {{ app()->getLocale() === 'ar' ? number_format($item->product->price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->product->price * $item->quantity, 2) }}
+                                                        {{ app()->getLocale() === 'ar' ? number_format($item->price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->price * $item->quantity, 2) }}
 
                                                     </strong>
 

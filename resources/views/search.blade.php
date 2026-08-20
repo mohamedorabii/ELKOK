@@ -42,10 +42,12 @@
                                 <a href="{{ route('product.details', $product->id) }}">
                                     <i class="ti-eye"></i>
                                 </a>
-                                <a href="#" class="cart-trigger"
-                                   data-form="cart-form-{{ $product->id }}">
-                                    <i class="ti-shopping-cart"></i>
-                                </a>
+                                @if (! $product->has_variants && $product->stock_quantity > 0)
+                                    <a href="#" class="cart-trigger"
+                                       data-form="cart-form-{{ $product->id }}">
+                                        <i class="ti-shopping-cart"></i>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                         <div class="product-btm">

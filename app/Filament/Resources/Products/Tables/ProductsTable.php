@@ -30,9 +30,17 @@ class ProductsTable
                     ->label('Image')
                     ->disk('public')                  
                     ->default('products/default.png'), 
+                TextColumn::make('variants_count')
+                    ->counts('variants')
+                    ->label('Variants')
+                    ->sortable(),
                 TextColumn::make('quantity')
+                    ->label('Base Qty')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('stock_quantity')
+                    ->label('Available Stock')
+                    ->numeric(),
                 TextColumn::make('status')
                     ->label('Status')
                     ->formatStateUsing(fn($state) => $state == 1 ? 'Active' : 'Not Active')

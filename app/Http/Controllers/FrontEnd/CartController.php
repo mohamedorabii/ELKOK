@@ -7,7 +7,6 @@ use App\Http\Requests\AddToCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Models\Cart;
 use App\Services\CartService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -35,7 +34,8 @@ class CartController extends Controller
     $added = $this->cartService->addToCart(
         $this->identifier(),
         $request->product_id,
-        $request->quantity ?? 1
+        $request->quantity ?? 1,
+        $request->variant_id
     );
 
     if (!$added) {

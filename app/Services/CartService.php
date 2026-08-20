@@ -25,8 +25,8 @@ class CartService
                     ->whereHas('category', function ($q) {
                         $q->where('status', 1);
                     });
-            })
-            ->with('product')
+                })
+                ->with(['product', 'variant.color', 'variant.size'])
             ->get();
     }
 
@@ -40,15 +40,16 @@ class CartService
             return 0;
         }
 
-        return $item->product->price * $item->quantity;
+        return $item->unit_price * $item->quantity;
     });
 
     return compact('total', 'shipping');
 }
 
-   public function addToCart(array $identifier, int $productId, int $quantity = 1): bool
+   public function addToCart(array $identifier, int $productId, int $quantity = 1, ?int $variantId = null): bool
 {
     $product = Product::where('status', 1)
+        ->with(['variants'])
         ->whereHas('category', fn($q) => $q->where('status', 1))
         ->find($productId);
 
@@ -56,14 +57,37 @@ class CartService
         return false;
     }
 
+    $variant = null;
+
+    if ($product->has_variants) {
+        if (!$variantId) {
+            return false;
+        }
+
+        $variant = $product->variants->firstWhere('id', $variantId);
+
+        if (!$variant || $variant->stock < $quantity) {
+            return false;
+        }
+    }
+
+    if (!$product->has_variants && $quantity > $product->quantity) {
+        return false;
+    }
+
     $cartItem = Cart::where($identifier)
         ->where('product_id', $productId)
+        ->where('variant_id', $variantId)
         ->first();
 
     $newQuantity = ($cartItem?->quantity ?? 0) + $quantity;
 
     // لا تسمح بإضافة كمية أكبر من المخزون
-    if ($newQuantity > $product->quantity) {
+    if ($product->has_variants) {
+        if ($newQuantity > $variant->stock) {
+            return false;
+        }
+    } elseif ($newQuantity > $product->quantity) {
         return false;
     }
 
@@ -75,6 +99,7 @@ class CartService
         Cart::create([
             ...$identifier,
             'product_id' => $productId,
+            'variant_id' => $variantId,
             'quantity'   => $quantity,
         ]);
     }
@@ -84,9 +109,11 @@ class CartService
 
    public function updateCart(Cart $cart, int $quantity, ?int $userId): bool
 {
+    $cart->loadMissing(['product.variants', 'variant']);
+
     // Guest cart
     if ($userId === null) {
-        if ($quantity > $cart->product->quantity) {
+        if ($quantity > $cart->available_stock) {
             return false;
         }
         $cart->update(['quantity' => $quantity]);
@@ -98,7 +125,7 @@ class CartService
         return false;
     }
 
-    if (!$cart->product || $quantity > $cart->product->quantity) {
+    if (!$cart->product || $quantity > $cart->available_stock) {
         return false;
     }
 

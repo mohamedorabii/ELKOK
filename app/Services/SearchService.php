@@ -12,6 +12,7 @@ class SearchService
     public function search(string $query, int $perPage = 9): array
     {
         $products = Product::search($query)
+            ->query(fn ($builder) => $builder->with(['variants']))
             ->where('status', 1)
             ->paginate($perPage);
 
