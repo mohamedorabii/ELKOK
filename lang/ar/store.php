@@ -70,6 +70,7 @@ return [
         'no_results' => 'لا توجد نتائج',
         'try_different_keywords' => 'جرّب كلمات مفتاحية مختلفة',
         'view_all' => 'عرض الكل',
+        'choose_options' => 'اختر الخيارات',
     ],
     'pages' => [
         'home' => [

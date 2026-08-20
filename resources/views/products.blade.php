@@ -55,7 +55,11 @@
                                         <i class="ti-eye"></i>
                                     </a>
 
-                                    @if (! $product->has_variants && $product->stock_quantity > 0)
+                                    @if ($product->has_variants && $product->stock_quantity > 0)
+                                        <a href="{{ route('product.details', $product->id) }}" title="{{ __('store.common.choose_options') }}">
+                                            <i class="ti-list"></i>
+                                        </a>
+                                    @elseif (! $product->has_variants && $product->stock_quantity > 0)
                                         <a href="#" class="cart-trigger" data-form="cart-form-{{ $product->id }}" title="{{ __('store.common.add_to_cart') }}">
                                             <i class="ti-shopping-cart"></i>
                                         </a>
