@@ -23,7 +23,9 @@
 </section>
 
 {{-- Cart Section --}}
-<section class="cart_area section_gap">
+<section class="cart_area section_gap" id="cart-root"
+    data-currency="{{ __('store.currency') }}"
+    data-locale="{{ app()->getLocale() }}">
     <div class="container">
 
         {{-- Alerts --}}
@@ -96,20 +98,24 @@
                                 <h5>{{ app()->getLocale() === 'ar' ? number_format($item->unit_price, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->unit_price, 2) }}</h5>
                             </td>
                             <td>
-                                <form action="{{ route('cart.update', $item) }}" method="POST"
-                                      class="d-flex align-items-center">
-                                    @csrf
-                                    <div class="product_count">
-                                        <input type="number" name="quantity" min="1" max="{{ $item->available_stock }}"
-                                               value="{{ $item->quantity }}"
-                                               class="input-text qty"
-                                               style="width:75px;">
-                                    </div>
-                                    <button type="submit" class="main_btn ml-2"
-                                            style="padding:5px 12px; font-size:13px;">
-                                        Update
+                                <div class="d-flex align-items-center cart-qty-stepper"
+                                     data-cart-id="{{ $item->id }}"
+                                     data-update-url="{{ route('cart.update', $item) }}"
+                                     data-unit-price="{{ $item->unit_price }}"
+                                     data-max-stock="{{ $item->available_stock }}"
+                                     style="gap:0; border:1px solid #dee2e6; border-radius:4px; overflow:hidden; width:fit-content;">
+                                    <button type="button" class="cart-qty-minus"
+                                            style="border:none;background:#f8f9fa;width:32px;height:32px;font-size:16px;">
+                                        −
                                     </button>
-                                </form>
+                                    <span class="cart-qty-value"
+                                          style="width:40px;text-align:center;font-size:14px;">{{ $item->quantity }}</span>
+                                    <button type="button" class="cart-qty-plus"
+                                            style="border:none;background:#f8f9fa;width:32px;height:32px;font-size:16px;">
+                                        +
+                                    </button>
+                                </div>
+                                <small class="cart-qty-error text-danger d-none" style="font-size:11px;"></small>
                             </td>
                             <td>
                                 <h5>{{ app()->getLocale() === 'ar' ? number_format($item->unit_price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->unit_price * $item->quantity, 2) }}</h5>
@@ -124,7 +130,7 @@
                             <td></td>
                             <td></td>
                             <td><h5>Subtotal</h5></td>
-                            <td><h5>{{ app()->getLocale() === 'ar' ? number_format($total, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total, 2) }}</h5></td>
+                            <td><h5 id="cart-subtotal-value">{{ app()->getLocale() === 'ar' ? number_format($total, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total, 2) }}</h5></td>
                         </tr>
                         <tr>
                             <td></td>
@@ -138,7 +144,7 @@
                             <td></td>
                             <td></td>
                             <td><h5><strong>Total</strong></h5></td>
-                            <td><h5><strong>{{ app()->getLocale() === 'ar' ? number_format($total + $shipping, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total + $shipping, 2) }}</strong></h5></td>
+                            <td><h5><strong id="cart-total-value">{{ app()->getLocale() === 'ar' ? number_format($total + $shipping, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total + $shipping, 2) }}</strong></h5></td>
                         </tr>
 
                         {{-- Buttons --}}

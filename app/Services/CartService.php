@@ -107,15 +107,19 @@ class CartService
     return true;
 }
 
-   public function updateCart(Cart $cart, int $quantity, ?int $userId): bool
+   public function updateCart(Cart $cart, int $quantity, ?int $userId, ?string $sessionId = null): bool
 {
     $cart->loadMissing(['product.variants', 'variant']);
 
-    // Guest cart
     if ($userId === null) {
-        if ($quantity > $cart->available_stock) {
+        if ($cart->session_id !== $sessionId) {
             return false;
         }
+
+        if (!$cart->product || $quantity > $cart->available_stock) {
+            return false;
+        }
+
         $cart->update(['quantity' => $quantity]);
         return true;
     }

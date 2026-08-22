@@ -60,6 +60,12 @@ class OrderInfolist
                             ->schema([
                                 TextEntry::make('product.name_en')
                                     ->label('Product'),
+                                TextEntry::make('variant_label')
+                                    ->label('Variant')
+                                    ->placeholder('-'),
+                                TextEntry::make('variant_sku')
+                                    ->label('SKU')
+                                    ->placeholder('-'),
                                 TextEntry::make('quantity')
                                     ->label('Quantity'),
                                 TextEntry::make('price')
@@ -69,7 +75,7 @@ class OrderInfolist
                                     ->label('Total')
                                     ->money(),
                             ])
-                            ->columns(4),
+                            ->columns(6),
                     ]),
 
                 Section::make('Invoice')
@@ -80,7 +86,7 @@ class OrderInfolist
                                     ->label('Products Total')
                                     ->money()
                                     ->getStateUsing(
-                                        fn ($record) => $record->items->sum('total_price')
+                                        fn($record) => $record->items->sum('total_price')
                                     ),
                                 TextEntry::make('shipping_price')
                                     ->label('Shipping Costs')

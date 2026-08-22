@@ -98,6 +98,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(CheckoutController::class)->group(function () {
         Route::get('/checkout', 'index')->name('checkout.index');
         Route::post('/checkout/place-order', 'placeOrder')->name('checkout.placeOrder');
+        Route::get('/checkout/confirmation/{order}', 'confirmation')->name('checkout.confirmation');
         Route::get('/my-orders', 'myOrders')->name('orders.index');
         Route::patch('/orders/{order}/cancel', 'cancelOrder')
             ->name('orders.cancel');

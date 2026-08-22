@@ -53,12 +53,43 @@ public function updateCart(UpdateCartRequest $request, Cart $cart)
     $updated = $this->cartService->updateCart(
         $cart,
         $request->quantity,
-        Auth::id()
+        Auth::id(),
+        session()->getId()
     );
 
     if (!$updated) {
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'The requested quantity is not available.',
+            ], 422);
+        }
+
         return redirect()->back()->withErrors([
             'quantity' => 'The requested quantity is not available.'
+        ]);
+    }
+
+    if ($request->expectsJson()) {
+        $cart->refresh()->loadMissing(['product', 'variant']);
+
+        $cartItems = $this->cartService->getCartItems($this->identifier());
+        $totals    = $this->cartService->calculateTotal($cartItems);
+
+        return response()->json([
+            'success' => true,
+            'item' => [
+                'id'              => $cart->id,
+                'quantity'        => $cart->quantity,
+                'unit_price'      => $cart->unit_price,
+                'line_total'      => $cart->unit_price * $cart->quantity,
+                'available_stock' => $cart->available_stock,
+            ],
+            'totals' => [
+                'subtotal' => $totals['total'],
+                'shipping' => $totals['shipping'],
+                'total'    => $totals['total'] + $totals['shipping'],
+            ],
         ]);
     }
 

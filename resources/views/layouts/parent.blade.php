@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="icon" href="{{ asset('new-template/img/favicon.png') }}" type="image/png" />
     <title>@yield('title', __('store.app_name'))</title>
@@ -47,6 +48,7 @@
     <script src="{{ asset('new-template/js/mail-script.js') }}"></script>
     <script src="{{ asset('new-template/js/theme.js') }}"></script>
     <script src="{{ asset('new-template/js/main.js') }}"></script>
+    <script src="{{ asset('new-template/js/cart.js') }}"></script>
 
     @stack('scripts')
 </body>

@@ -37,12 +37,19 @@ class CheckoutController extends Controller
             $totals = $this->checkoutService->calculateTotals($cartItems);
             $order  = $this->checkoutService->placeOrder($user, $request->validated(), $cartItems, $totals);
 
-            return redirect()
-                ->route('orders.index')
-                ->with('success', 'Order placed successfully. Tracking number: ' . $order->order_number);
+            return redirect()->route('checkout.confirmation', $order);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function confirmation(Order $order)
+    {
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('checkout-confirmation', compact('order'));
     }
 
     public function myOrders()

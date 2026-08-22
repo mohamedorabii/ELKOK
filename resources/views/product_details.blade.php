@@ -110,36 +110,46 @@
                         </p>
 
                         @if ($product->has_variants)
-                            <div class="mb-4">
-                                <strong class="d-block mb-2">Color</strong>
-                                <div class="d-flex flex-wrap" id="variant-colors" style="gap:10px;">
-                                    @foreach ($availableColors as $color)
-                                        <button type="button" class="btn btn-outline-dark variant-color-btn"
-                                            data-color-id="{{ $color->id }}" data-color-name="{{ $color->name }}"
-                                            style="border-radius:999px;">
-                                            @if ($color->hex_code)
-                                                <span
-                                                    style="display:inline-block;width:10px;height:10px;border-radius:50%;background:{{ $color->hex_code }};margin-right:8px;"></span>
-                                            @endif
-                                            {{ $color->name }}
-                                        </button>
-                                    @endforeach
-                                </div>
-                            </div>
+                            <div id="product-variant-root" data-variants="{{ json_encode($variantOptions) }}"
+                                data-initial-price="{{ $initialPrice }}" data-currency="{{ __('store.currency') }}"
+                                data-locale="{{ app()->getLocale() }}"
+                                data-in-stock-text="{{ __('store.pages.product_details.in_stock') }}"
+                                data-choose-color-size-text="{{ app()->getLocale() === 'ar' ? 'اختر اللون والمقاس' : 'Choose a color and size' }}"
+                                data-no-sizes-text="{{ app()->getLocale() === 'ar' ? 'لا توجد أحجام متاحة لهذا اللون' : 'No sizes available for this color' }}"
+                                data-no-instock-sizes-text="{{ app()->getLocale() === 'ar' ? 'لا توجد كميات متاحة لهذا اللون' : 'No in-stock sizes for this color' }}"
+                                data-left-text="{{ __('store.common.left') }}">
 
-                            <div class="mb-4">
-                                <strong class="d-block mb-2">Size</strong>
-                                <div class="d-flex flex-wrap" id="variant-sizes" style="gap:10px;">
-                                    <span
-                                        class="text-muted">{{ app()->getLocale() === 'ar' ? 'اختر لونًا أولًا' : 'Select a color first' }}</span>
+                                <div class="mb-4">
+                                    <strong class="d-block mb-2">Color</strong>
+                                    <div class="d-flex flex-wrap" id="variant-colors" style="gap:10px;">
+                                        @foreach ($availableColors as $color)
+                                            <button type="button" class="btn btn-outline-dark variant-color-btn"
+                                                data-color-id="{{ $color->id }}" data-color-name="{{ $color->name }}"
+                                                style="border-radius:999px;">
+                                                @if ($color->hex_code)
+                                                    <span
+                                                        style="display:inline-block;width:10px;height:10px;border-radius:50%;background:{{ $color->hex_code }};margin-right:8px;"></span>
+                                                @endif
+                                                {{ $color->name }}
+                                            </button>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="mb-4 p-3" style="background:#f8f9fa;border-radius:16px;">
-                                <strong class="d-block mb-2">Selected variant</strong>
-                                <span class="text-muted" id="selected-variant-text">
-                                    {{ app()->getLocale() === 'ar' ? 'اختر اللون والمقاس' : 'Choose a color and size' }}
-                                </span>
+                                <div class="mb-4">
+                                    <strong class="d-block mb-2">Size</strong>
+                                    <div class="d-flex flex-wrap" id="variant-sizes" style="gap:10px;">
+                                        <span
+                                            class="text-muted">{{ app()->getLocale() === 'ar' ? 'اختر لونًا أولًا' : 'Select a color first' }}</span>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4 p-3" style="background:#f8f9fa;border-radius:16px;">
+                                    <strong class="d-block mb-2">Selected variant</strong>
+                                    <span class="text-muted" id="selected-variant-text">
+                                        {{ app()->getLocale() === 'ar' ? 'اختر اللون والمقاس' : 'Choose a color and size' }}
+                                    </span>
+                                </div>
                             </div>
                         @endif
 
@@ -270,127 +280,10 @@
         </div>
     </section>
 
-    @if ($product->has_variants)
-        <script>
-            (() => {
-                const variants = @json($variantOptions);
-                const colors = document.querySelectorAll('.variant-color-btn');
-                const sizesContainer = document.getElementById('variant-sizes');
-                const variantInput = document.getElementById('selected-variant-id');
-                const addButton = document.getElementById('add-to-cart-button');
-                const quantityInput = document.getElementById('product-quantity-input');
-                const priceDisplay = document.getElementById('product-price-display');
-                const stockBadge = document.getElementById('product-stock-badge');
-                const summaryText = document.getElementById('selected-variant-text');
-                const galleryThumbs = document.querySelectorAll('.gallery-thumb');
-                const mainImage = document.getElementById('product-main-image');
-
-                const currencyPrefix = @json(app()->getLocale() === 'ar' ? '' : __('store.currency') . ' ');
-                const currencySuffix = @json(app()->getLocale() === 'ar' ? ' ' . __('store.currency') : '');
-                const formatPrice = (value) => `${currencyPrefix}${Number(value).toFixed(2)}${currencySuffix}`.trim();
-                const variantsByColor = variants.reduce((grouped, variant) => {
-                    if (!grouped[variant.color_id]) {
-                        grouped[variant.color_id] = [];
-                    }
-                    grouped[variant.color_id].push(variant);
-                    return grouped;
-                }, {});
-
-                const resetVariantSelection = () => {
-                    variantInput.value = '';
-                    addButton.disabled = true;
-                    quantityInput.disabled = true;
-                    quantityInput.value = 1;
-                    quantityInput.max = 1;
-                    priceDisplay.textContent = @json($initialPrice);
-                    summaryText.textContent = @json(app()->getLocale() === 'ar' ? 'اختر اللون والمقاس' : 'Choose a color and size');
-                    stockBadge.className = 'badge badge-success';
-                    stockBadge.style.cssText = 'font-size:15px;padding:7px 14px;border-radius:20px;font-weight:600;';
-                    stockBadge.textContent = @json(__('store.pages.product_details.in_stock'));
-                };
-
-                const clearActiveSizeButtons = () => {
-                    document.querySelectorAll('.variant-size-btn').forEach((button) => {
-                        button.classList.remove('btn-dark');
-                        button.classList.add('btn-outline-secondary');
-                    });
-                };
-
-                const renderSizes = (colorId) => {
-                    const colorVariants = variantsByColor[colorId] || [];
-                    const availableVariants = colorVariants.filter((variant) => Number(variant.stock) > 0);
-
-                    sizesContainer.innerHTML = '';
-
-                    if (!colorVariants.length) {
-                        sizesContainer.innerHTML = `<span class="text-muted">${@json(app()->getLocale() === 'ar' ? 'لا توجد أحجام متاحة لهذا اللون' : 'No sizes available for this color')}</span>`;
-                        return;
-                    }
-
-                    colorVariants.forEach((variant) => {
-                        const button = document.createElement('button');
-                        button.type = 'button';
-                        button.className = 'btn btn-outline-secondary variant-size-btn';
-                        button.dataset.variantId = variant.id;
-                        button.textContent = variant.size_name;
-                        button.style.borderRadius = '999px';
-
-                        if (Number(variant.stock) <= 0) {
-                            button.disabled = true;
-                            button.classList.add('text-muted');
-                        }
-
-                        button.addEventListener('click', () => {
-                            clearActiveSizeButtons();
-                            button.classList.remove('btn-outline-secondary');
-                            button.classList.add('btn-dark');
-
-                            variantInput.value = variant.id;
-                            addButton.disabled = false;
-                            quantityInput.disabled = false;
-                            quantityInput.max = variant.stock;
-                            quantityInput.value = 1;
-                            priceDisplay.textContent = formatPrice(variant.price);
-                            stockBadge.className = 'badge badge-success';
-                            stockBadge.textContent = @json(__('store.pages.product_details.in_stock'));
-                            summaryText.textContent =
-                                `${variant.color_name} / ${variant.size_name}${variant.sku ? ' · ' + variant.sku : ''} · ${variant.stock} @json(__('store.common.left'))`;
-                        });
-
-                        sizesContainer.appendChild(button);
-                    });
-
-                    if (!availableVariants.length) {
-                        addButton.disabled = true;
-                        quantityInput.disabled = true;
-                        summaryText.textContent = @json(app()->getLocale() === 'ar' ? 'لا توجد كميات متاحة لهذا اللون' : 'No in-stock sizes for this color');
-                    }
-                };
-
-                colors.forEach((button) => {
-                    button.addEventListener('click', () => {
-                        colors.forEach((item) => {
-                            item.classList.remove('btn-dark');
-                            item.classList.add('btn-outline-dark');
-                        });
-
-                        button.classList.remove('btn-outline-dark');
-                        button.classList.add('btn-dark');
-
-                        resetVariantSelection();
-                        renderSizes(button.dataset.colorId);
-                    });
-                });
-
-                galleryThumbs.forEach((thumb) => {
-                    thumb.addEventListener('click', () => {
-                        mainImage.src = thumb.dataset.image;
-                    });
-                });
-
-                resetVariantSelection();
-            })();
-        </script>
-    @endif
+   @if ($product->has_variants)
+    @push('scripts')
+        <script src="{{ asset('new-template/js/product-details.js') }}"></script>
+    @endpush
+@endif
 
 @endsection
