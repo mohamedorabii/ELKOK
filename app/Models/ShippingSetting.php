@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShippingSetting extends Model
 {
-    protected $fillable = ['price'];
+    protected $fillable = ['governorate', 'price'];
 }

@@ -23,10 +23,10 @@ class PlaceOrderRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|min:3',
-            'phone' => ['required','digits:11','regex:/^01[0-2,5][0-9]{8}$/'],
+            'phone' => ['required', 'digits:11', 'regex:/^01[0-2,5][0-9]{8}$/'],
             'address' => 'required|string|max:500',
             'city' => 'required|string|max:100',
-            'governorate' => 'required|string|max:100',
+            'governorate' => 'required|string|exists:shipping_settings,governorate',
         ];
     }
     public function messages(): array
@@ -45,9 +45,9 @@ class PlaceOrderRequest extends FormRequest
             'city.required' => 'Please enter your city.',
             'city.string' => 'City must be a valid string.',
             'city.max' => 'City cannot exceed 100 characters.',
-            'governorate.required' => 'Please enter your governorate.',
+            'governorate.required' => 'Please select your governorate.',
             'governorate.string' => 'Governorate must be a valid string.',
-            'governorate.max' => 'Governorate cannot exceed 100 characters.',
+            'governorate.exists' => 'Please select a valid governorate from the list.',
         ];
     }
 }

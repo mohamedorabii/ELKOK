@@ -51,12 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
             errorEl.textContent = '';
         };
 
-        const syncTotals = (totals) => {
-            const subtotalEl = document.getElementById('cart-subtotal-value');
-            const totalEl = document.getElementById('cart-total-value');
-            if (subtotalEl) subtotalEl.textContent = formatPrice(totals.subtotal);
-            if (totalEl) totalEl.textContent = formatPrice(totals.total);
-        };
+       const syncTotals = (totals) => {
+    const totalEl = document.getElementById('cart-total-value');
+    if (totalEl) totalEl.textContent = formatPrice(totals.total);
+};
 
         const sendUpdate = (newQuantity, previousQuantity) => {
             isSyncing = true;

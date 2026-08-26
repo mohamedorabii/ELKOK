@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Cart;
 use App\Models\Product;
-use App\Models\ShippingSetting;
 
 class CartService
 {
@@ -25,94 +24,105 @@ class CartService
                     ->whereHas('category', function ($q) {
                         $q->where('status', 1);
                     });
-                })
-                ->with(['product', 'variant.color', 'variant.size'])
+            })
+            ->with(['product', 'variant.color', 'variant.size'])
             ->get();
     }
 
 
-   public function calculateTotal($cartItems): array
-{
-    $shipping = ShippingSetting::first()->price ?? 0;
+    public function calculateTotal($cartItems): array
+    {
+        $total = $cartItems->sum(function ($item) {
+            if (!$item->product) {
+                return 0;
+            }
 
-    $total = $cartItems->sum(function ($item) {
-        if (!$item->product) {
-            return 0;
-        }
+            return $item->unit_price * $item->quantity;
+        });
 
-        return $item->unit_price * $item->quantity;
-    });
-
-    return compact('total', 'shipping');
-}
-
-   public function addToCart(array $identifier, int $productId, int $quantity = 1, ?int $variantId = null): bool
-{
-    $product = Product::where('status', 1)
-        ->with(['variants'])
-        ->whereHas('category', fn($q) => $q->where('status', 1))
-        ->find($productId);
-
-    if (!$product) {
-        return false;
+        return compact('total');
     }
 
-    $variant = null;
+    public function addToCart(array $identifier, int $productId, int $quantity = 1, ?int $variantId = null): bool
+    {
+        $product = Product::where('status', 1)
+            ->with(['variants'])
+            ->whereHas('category', fn($q) => $q->where('status', 1))
+            ->find($productId);
 
-    if ($product->has_variants) {
-        if (!$variantId) {
+        if (!$product) {
             return false;
         }
 
-        $variant = $product->variants->firstWhere('id', $variantId);
+        $variant = null;
 
-        if (!$variant || $variant->stock < $quantity) {
+        if ($product->has_variants) {
+            if (!$variantId) {
+                return false;
+            }
+
+            $variant = $product->variants->firstWhere('id', $variantId);
+
+            if (!$variant || $variant->stock < $quantity) {
+                return false;
+            }
+        }
+
+        if (!$product->has_variants && $quantity > $product->quantity) {
             return false;
         }
-    }
 
-    if (!$product->has_variants && $quantity > $product->quantity) {
-        return false;
-    }
+        $cartItem = Cart::where($identifier)
+            ->where('product_id', $productId)
+            ->where('variant_id', $variantId)
+            ->first();
 
-    $cartItem = Cart::where($identifier)
-        ->where('product_id', $productId)
-        ->where('variant_id', $variantId)
-        ->first();
+        $newQuantity = ($cartItem?->quantity ?? 0) + $quantity;
 
-    $newQuantity = ($cartItem?->quantity ?? 0) + $quantity;
-
-    // لا تسمح بإضافة كمية أكبر من المخزون
-    if ($product->has_variants) {
-        if ($newQuantity > $variant->stock) {
+        // لا تسمح بإضافة كمية أكبر من المخزون
+        if ($product->has_variants) {
+            if ($newQuantity > $variant->stock) {
+                return false;
+            }
+        } elseif ($newQuantity > $product->quantity) {
             return false;
         }
-    } elseif ($newQuantity > $product->quantity) {
-        return false;
+
+        if ($cartItem) {
+            $cartItem->update([
+                'quantity' => $newQuantity,
+            ]);
+        } else {
+            Cart::create([
+                ...$identifier,
+                'product_id' => $productId,
+                'variant_id' => $variantId,
+                'quantity'   => $quantity,
+            ]);
+        }
+
+        return true;
     }
 
-    if ($cartItem) {
-        $cartItem->update([
-            'quantity' => $newQuantity,
-        ]);
-    } else {
-        Cart::create([
-            ...$identifier,
-            'product_id' => $productId,
-            'variant_id' => $variantId,
-            'quantity'   => $quantity,
-        ]);
-    }
+    public function updateCart(Cart $cart, int $quantity, ?int $userId, ?string $sessionId = null): bool
+    {
+        $cart->loadMissing(['product.variants', 'variant']);
 
-    return true;
-}
+        if ($userId === null) {
+            if ($cart->session_id !== $sessionId) {
+                return false;
+            }
 
-   public function updateCart(Cart $cart, int $quantity, ?int $userId, ?string $sessionId = null): bool
-{
-    $cart->loadMissing(['product.variants', 'variant']);
+            if (!$cart->product || $quantity > $cart->available_stock) {
+                return false;
+            }
 
-    if ($userId === null) {
-        if ($cart->session_id !== $sessionId) {
+            $cart->update(['quantity' => $quantity]);
+            return true;
+        }
+
+        // User cart
+        if ($cart->user_id !== $userId) {
             return false;
         }
 
@@ -124,35 +134,22 @@ class CartService
         return true;
     }
 
-    // User cart
-    if ($cart->user_id !== $userId) {
-        return false;
-    }
+    public function removeFromCart(Cart $cart, ?int $userId): bool
+    {
+        // Guest cart
+        if ($userId === null) {
+            $cart->delete();
+            return true;
+        }
 
-    if (!$cart->product || $quantity > $cart->available_stock) {
-        return false;
-    }
+        // User cart
+        if ($cart->user_id !== $userId) {
+            return false;
+        }
 
-    $cart->update(['quantity' => $quantity]);
-    return true;
-}
-
-public function removeFromCart(Cart $cart, ?int $userId): bool
-{
-    // Guest cart
-    if ($userId === null) {
         $cart->delete();
         return true;
     }
-
-    // User cart
-    if ($cart->user_id !== $userId) {
-        return false;
-    }
-
-    $cart->delete();
-    return true;
-}
     public function clearCart(array $identifier): void
     {
         Cart::where($identifier)->delete();

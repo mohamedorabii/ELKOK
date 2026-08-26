@@ -118,33 +118,19 @@
                                 <small class="cart-qty-error text-danger d-none" style="font-size:11px;"></small>
                             </td>
                             <td>
-                                <h5>{{ app()->getLocale() === 'ar' ? number_format($item->unit_price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->unit_price * $item->quantity, 2) }}</h5>
+                                <h5 class="cart-line-total" data-cart-id="{{ $item->id }}">{{ app()->getLocale() === 'ar' ? number_format($item->unit_price * $item->quantity, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($item->unit_price * $item->quantity, 2) }}</h5>
                             </td>
                         </tr>
                         @endif
                         @endforeach
 
-                        {{-- Subtotal --}}
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><h5>Subtotal</h5></td>
-                            <td><h5 id="cart-subtotal-value">{{ app()->getLocale() === 'ar' ? number_format($total, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total, 2) }}</h5></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><h5>Shipping</h5></td>
-                            <td><h5>{{ app()->getLocale() === 'ar' ? number_format($shipping, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($shipping, 2) }}</h5></td>
-                        </tr>
+                        {{-- Total --}}
                         <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td><h5><strong>Total</strong></h5></td>
-                            <td><h5><strong id="cart-total-value">{{ app()->getLocale() === 'ar' ? number_format($total + $shipping, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total + $shipping, 2) }}</strong></h5></td>
+                            <td><h5><strong id="cart-total-value">{{ app()->getLocale() === 'ar' ? number_format($total, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total, 2) }}</strong></h5></td>
                         </tr>
 
                         {{-- Buttons --}}

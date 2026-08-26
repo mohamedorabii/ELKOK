@@ -14,11 +14,14 @@
                         <ul class="right_side">
                             <li><a href="{{ route('cart.index') }}">{{ __('store.nav.cart') }}</a></li>
                             <li><a href="{{ route('contact') }}">{{ __('store.nav.contact') }}</a></li>
-                            <li>
-                                <a href="{{ route('language.switch', ['locale' => app()->getLocale() === 'en' ? 'ar' : 'en']) }}">
-                                    {{ app()->getLocale() === 'en' ? __('store.switch_to_ar') : __('store.switch_to_en') }}
-                                </a>
-                            </li>
+                           <li>
+    <a href="{{ route('language.switch', ['locale' => app()->getLocale() === 'en' ? 'ar' : 'en']) }}"
+        title="{{ app()->getLocale() === 'en' ? __('store.switch_to_ar') : __('store.switch_to_en') }}"
+        style="display:inline-flex; align-items:center; gap:5px;">
+        <i class="ti-world"></i>
+        {{ strtoupper(app()->getLocale() === 'en' ? 'ar' : 'en') }}
+    </a>
+</li>>
 
                             
                         </ul>

@@ -20,8 +20,9 @@ class CheckoutController extends Controller
         }
 
         $totals = $this->checkoutService->calculateTotals($cartItems);
+        $shippingOptions = $this->checkoutService->getAvailableShippingOptions();
 
-        return view('checkout', array_merge(compact('cartItems'), $totals));
+        return view('checkout', array_merge(compact('cartItems', 'shippingOptions'), $totals));
     }
 
     public function placeOrder(PlaceOrderRequest $request)
@@ -34,7 +35,7 @@ class CheckoutController extends Controller
                 return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
             }
 
-            $totals = $this->checkoutService->calculateTotals($cartItems);
+            $totals = $this->checkoutService->calculateTotals($cartItems, $request->validated('governorate'));
             $order  = $this->checkoutService->placeOrder($user, $request->validated(), $cartItems, $totals);
 
             return redirect()->route('checkout.confirmation', $order);

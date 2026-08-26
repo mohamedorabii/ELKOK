@@ -37,10 +37,7 @@ class ShippingSettingResource extends Resource
             //
         ];
     }
-    public static function canCreate(): bool
-    {
-        return ShippingSetting::count() === 0;
-    }
+    
     public static function getPages(): array
     {
         return [

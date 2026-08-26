@@ -14,8 +14,11 @@ class ShippingSettingsTable
     {
         return $table
             ->columns([
+                TextColumn::make('governorate')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('price')
-                    ->money()
+                    ->money('EGP')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

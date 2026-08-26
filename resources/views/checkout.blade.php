@@ -54,7 +54,11 @@
         </div>
         @endif
 
-        <form action="{{ route('checkout.placeOrder') }}" method="POST">
+        <form action="{{ route('checkout.placeOrder') }}" method="POST" id="checkout-form"
+              data-currency="{{ __('store.currency') }}"
+              data-locale="{{ app()->getLocale() }}"
+              data-subtotal="{{ $subtotal }}"
+              data-shipping-options="{{ $shippingOptions->pluck('price', 'governorate')->toJson() }}">
             @csrf
             <div class="row">
 
@@ -84,9 +88,15 @@
                                     value="{{ old('city') }}">
                             </div>
                             <div class="col-md-6 form-group">
-                                <input type="text" class="form-control" name="governorate"
-                                    placeholder="Governorate"
-                                    value="{{ old('governorate') }}">
+                                <select class="form-control" name="governorate" id="governorate-select">
+                                    <option value="">Select Governorate</option>
+                                    @foreach($shippingOptions as $option)
+                                        <option value="{{ $option->governorate }}"
+                                            {{ old('governorate') === $option->governorate ? 'selected' : '' }}>
+                                            {{ $option->governorate }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -123,17 +133,21 @@
                         <ul class="list list_2">
                             <li class="d-flex justify-content-between">
                                 <span>Subtotal</span>
-                                <span>{{ app()->getLocale() === 'ar' ? number_format($subtotal, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($subtotal, 2) }}</span>
+                                <span id="checkout-subtotal-value">{{ app()->getLocale() === 'ar' ? number_format($subtotal, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($subtotal, 2) }}</span>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <span>Shipping</span>
-                                <span>{{ app()->getLocale() === 'ar' ? number_format($shipping, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($shipping, 2) }}</span>
+                                <span id="checkout-shipping-value">
+                                    {{ app()->getLocale() === 'ar' ? number_format($shipping, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($shipping, 2) }}
+                                </span>
                             </li>
                             <li class="d-flex justify-content-between">
                                 <span><strong>Total</strong></span>
-                                <span><strong>{{ app()->getLocale() === 'ar' ? number_format($total, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total, 2) }}</strong></span>
+                                <span><strong id="checkout-total-value">{{ app()->getLocale() === 'ar' ? number_format($total, 2) . ' ' . __('store.currency') : __('store.currency') . ' ' . number_format($total, 2) }}</strong></span>
                             </li>
                         </ul>
+
+                        <small id="governorate-hint" class="text-muted d-block mb-2"></small>
 
                         <button type="submit" class="main_btn w-100"
                                 style="border:none; cursor:pointer;">
@@ -150,5 +164,29 @@
         </form>
     </div>
 </section>
+
+@push('scripts')
+    <script src="{{ asset('new-template/js/checkout.js') }}"></script>
+@endpush
+
+<style>
+    #governorate-select + .nice-select {
+        height: 48px;
+        line-height: 46px;
+        padding-left: 15px;
+        padding-right: 35px;
+        font-size: 15px;
+        border-radius: 5px;
+    }
+
+    #governorate-select + .nice-select .current {
+        line-height: 46px;
+    }
+
+    #governorate-select + .nice-select .list {
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+    }
 
 @endsection
