@@ -188,5 +188,6 @@
         max-height: 200px;
         overflow-y: auto;
     }
+</style>
 
 @endsection

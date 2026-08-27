@@ -381,17 +381,22 @@ p.product-price span { display: block; opacity: 0.8; font-size: 15px; font-weigh
   padding: 18px;
   box-shadow: 0 0 20px #ddd;
 }
-
 .related-product-img {
   display: block;
-  width: 100%; height: 250px;
-  object-fit: contain;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;   /* بدل contain */
   background: #fff;
   border-radius: 8px;
-  padding: 12px;
+  padding: 0;           /* بدل 12px */
 }
 
-.single-product .product-img { background: #fff; border-radius: 8px; overflow: hidden; }
+.single-product .product-img img {
+  display: block;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;   /* بدل contain */
+}
 .single-product .product-img img { display: block; width: 100%; height: 250px; object-fit: contain; }
 
 .single-product-content { margin-left: 30px; }
@@ -562,7 +567,7 @@ td.product-remove a { color: #051922; }
   height: 240px; padding: 16px; background: #fff; overflow: hidden;
 }
 .search-results-page .single-product .product-img img.related-product-img {
-  width: 100%; height: 100%; object-fit: contain;
+  width: 100%; height: 100%; object-fit: contain;  /* غيّرها لـ cover كمان لو عايز نفس الشكل هناك */
 }
 
 @media (max-width: 991px) {

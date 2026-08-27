@@ -1,30 +1,20 @@
 @extends('layouts.parent')
 
-@section('title', 'Home - OrabyStore')
+@section('title', 'Home - ELKOK')
 
 @section('content')
 
-    {{-- Banner --}}
-    <section class="home_banner_area mb-40">
-        <div class="banner_inner d-flex align-items-center">
-            <div class="container">
-                <div class="banner_content row">
-                    <div class="col-lg-12">
-                        <p class="sub text-uppercase">{{ __('store.pages.home.new_collection') }}</p>
+    {{-- ELKOK Banner --}}
+<section class="home_banner_area mb-40 elkok-banner">
+    <div class="elkok-banner-bg"></div>
 
-                        @if (app()->getLocale() === 'ar')
-                            <h3>أظهر <span>أسلوبك</span> الشخصي</h3>
-                        @else
-                          <h3><span>Show</span> Your <br />Personal <span>Style</span></h3>
-                        @endif
-
-                        <a class="main_btn mt-40"
-                            href="{{ route('products') }}">{{ __('store.pages.home.view_collection') }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="elkok-banner-content">
+        <a href="{{ route('products') }}" class="main_btn elkok-shop-btn">
+            {{ __('store.pages.home.view_collection') }}
+            <span>→</span>
+        </a>
+    </div>
+</section>
 
     {{-- Features --}}
     <section class="feature-area section_gap_bottom_custom">
@@ -178,5 +168,7 @@
             </div>
         </div>
     </section>
-
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('new-template/css/elkok-banner.css') }}">
+@endpush
 @endsection

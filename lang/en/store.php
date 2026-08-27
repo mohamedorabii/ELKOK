@@ -77,7 +77,7 @@ return [
             'title' => 'Home',
             'new_collection' => 'New Collection',
             'show_your_style' => 'Show Your Personal Style',
-            'view_collection' => 'View Collection',
+            'view_collection' => 'Shop Now',
             'money_back' => 'Money back guarantee',
             'free_delivery' => 'Free Delivery',
             'always_support' => 'Always support',

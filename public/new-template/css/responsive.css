@@ -738,8 +738,8 @@
 .single-product .product-img img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    background: #f9f9f9;
+  object-fit: cover;
+      background: #f9f9f9;
 }
 /* Pagination */
 .pagination-list {
