@@ -92,8 +92,11 @@
 
                             <div class="product-img">
 
-                                <img class="img-fluid w-100" src="{{ asset('storage/' . $product->image) }}"
-                                    alt="{{ $product->name }}" />
+                              <a href="{{ route('product.details', $product->id) }}" class="product-image-link">
+    <img class="img-fluid w-100"
+        src="{{ asset('storage/' . $product->image) }}"
+        alt="{{ $product->name }}" />
+</a>
 
                                 @if ($product->stock_quantity > 0)
                                     <span class="badge badge-success"

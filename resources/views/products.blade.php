@@ -36,31 +36,38 @@
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="single-product">
                             <div class="product-img">
-                                <img class="related-product-img"
-                                    src="{{ asset('storage/' . $product->image) }}"
-                                    alt="{{ $product->name }}" />
+                                <a href="{{ route('product.details', $product->id) }}" class="product-image-link">
+    <img class="related-product-img"
+        src="{{ filter_var($product->image, FILTER_VALIDATE_URL) ? $product->image : asset('storage/' . $product->image) }}"
+        alt="{{ $product->name }}" />
+</a>
 
                                 @if ($product->stock_quantity > 0)
-                                    <span class="badge badge-success" style="position:absolute;top:10px;left:10px;font-size:13px;padding:6px 12px;border-radius:20px;">
+                                    <span class="badge badge-success"
+                                        style="position:absolute;top:10px;left:10px;font-size:13px;padding:6px 12px;border-radius:20px;">
                                         {{ __('store.common.in_stock') }}
                                     </span>
                                 @else
-                                    <span class="badge badge-danger" style="position:absolute;top:10px;left:10px;font-size:13px;padding:6px 12px;border-radius:20px;">
+                                    <span class="badge badge-danger"
+                                        style="position:absolute;top:10px;left:10px;font-size:13px;padding:6px 12px;border-radius:20px;">
                                         {{ __('store.common.out_of_stock') }}
                                     </span>
                                 @endif
 
                                 <div class="p_icon">
-                                    <a href="{{ route('product.details', $product->id) }}" title="{{ __('store.common.view') }}">
+                                    <a href="{{ route('product.details', $product->id) }}"
+                                        title="{{ __('store.common.view') }}">
                                         <i class="ti-eye"></i>
                                     </a>
 
                                     @if ($product->has_variants && $product->stock_quantity > 0)
-                                        <a href="{{ route('product.details', $product->id) }}" title="{{ __('store.common.choose_options') }}">
+                                        <a href="{{ route('product.details', $product->id) }}"
+                                            title="{{ __('store.common.choose_options') }}">
                                             <i class="ti-list"></i>
                                         </a>
-                                    @elseif (! $product->has_variants && $product->stock_quantity > 0)
-                                        <a href="#" class="cart-trigger" data-form="cart-form-{{ $product->id }}" title="{{ __('store.common.add_to_cart') }}">
+                                    @elseif (!$product->has_variants && $product->stock_quantity > 0)
+                                        <a href="#" class="cart-trigger" data-form="cart-form-{{ $product->id }}"
+                                            title="{{ __('store.common.add_to_cart') }}">
                                             <i class="ti-shopping-cart"></i>
                                         </a>
                                     @endif
@@ -90,7 +97,8 @@
                             </div>
                         </div>
 
-                        <form id="cart-form-{{ $product->id }}" action="{{ route('cart.add') }}" method="POST" style="display:none;">
+                        <form id="cart-form-{{ $product->id }}" action="{{ route('cart.add') }}" method="POST"
+                            style="display:none;">
                             @csrf
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <input type="hidden" name="quantity" value="1">
@@ -104,23 +112,30 @@
                     <div class="col-12 text-center">
                         <ul style="display:flex; gap:10px; justify-content:center; list-style:none; padding:0;">
                             @if ($products->onFirstPage())
-                                <li><span class="main_btn" style="opacity:0.5; cursor:not-allowed;">← {{ __('store.common.prev') }}</span></li>
+                                <li><span class="main_btn" style="opacity:0.5; cursor:not-allowed;">←
+                                        {{ __('store.common.prev') }}</span></li>
                             @else
-                                <li><a href="{{ $products->previousPageUrl() }}" class="main_btn">← {{ __('store.common.prev') }}</a></li>
+                                <li><a href="{{ $products->previousPageUrl() }}" class="main_btn">←
+                                        {{ __('store.common.prev') }}</a></li>
                             @endif
 
                             @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
                                 @if ($page == $products->currentPage())
                                     <li><span class="main_btn">{{ $page }}</span></li>
                                 @else
-                                    <li><a href="{{ $url }}" class="main_btn" style="background:#fff; color:#333; border:1px solid #ddd;">{{ $page }}</a></li>
+                                    <li><a href="{{ $url }}" class="main_btn"
+                                            style="background:#fff; color:#333; border:1px solid #ddd;">{{ $page }}</a>
+                                    </li>
                                 @endif
                             @endforeach
 
                             @if ($products->hasMorePages())
-                                <li><a href="{{ $products->nextPageUrl() }}" class="main_btn">{{ __('store.common.next') }} →</a></li>
+                                <li><a href="{{ $products->nextPageUrl() }}"
+                                        class="main_btn">{{ __('store.common.next') }} →</a></li>
                             @else
-                                <li><span class="main_btn" style="opacity:0.5; cursor:not-allowed;">{{ __('store.common.next') }} →</span></li>
+                                <li><span class="main_btn"
+                                        style="opacity:0.5; cursor:not-allowed;">{{ __('store.common.next') }} →</span>
+                                </li>
                             @endif
                         </ul>
                     </div>

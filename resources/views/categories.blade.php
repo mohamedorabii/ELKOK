@@ -36,10 +36,12 @@
             <div class="col-lg-4 col-md-6 mb-4 text-center">
                 <div class="single-product">
                     <div class="product-img">
-                        <img class="img-fluid w-100"
-                            src="{{ asset('storage/' . $category->image) }}"
-                            alt="{{ $category->name }}"
-                            style="max-height:250px; min-height:250px; object-fit:cover;" />
+                       <a href="{{ route('products', $category->id) }}" class="category-image-link">
+    <img class="img-fluid w-100" 
+        src="{{ asset('storage/' . $category->image) }}" 
+        alt="{{ $category->name }}" 
+        style="max-height:250px; min-height:250px; object-fit:cover;" />
+</a>
                         <div class="p_icon">
                             <a href="{{ route('products', $category->id) }}" title="{{ __('store.common.browse') }}">
                                 <i class="ti-eye"></i>

@@ -3,58 +3,75 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class CategorySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $categories = [
             [
-                'name_en' => 'Clothes',
-                'name_ar' => 'ملابس',
-                'image'   => 'categories/clothes.jpg',
-                'status'  => 1,
+                'name_en' => 'Sneakers',
+                'name_ar' => 'كوتشيات',
+                'image' => 'categories/sneakers.jpg',
+                'image_url' => 'https://loremflickr.com/900/600/sneakers?lock=101',
+                'status' => 1,
             ],
             [
-                'name_en' => 'Computer Accessories',
-                'name_ar' => 'ملحقات الكمبيوتر',
-                'image'   => 'categories/computer-accessories.jpg',
-                'status'  => 1,
-            ],
-            [
-                'name_en' => 'Bicycles',
-                'name_ar' => 'دراجات هوائية',
-                'image'   => 'categories/bicycles.jpg',
-                'status'  => 1,
-            ],
-            [
-                'name_en' => 'Books',
-                'name_ar' => 'كتب',
-                'image'   => 'categories/books.jpg',
-                'status'  => 1,
-            ],
-            [
-                'name_en' => 'Electronics',
-                'name_ar' => 'إلكترونيات',
-                'image'   => 'categories/electronics.jpg',
-                'status'  => 1,
-            ],
-            [
-                'name_en' => 'Home & Kitchen',
-                'name_ar' => 'منزل ومطبخ',
-                'image'   => 'categories/home-kitchen.jpg',
-                'status'  => 1,
+                'name_en' => 'Slippers',
+                'name_ar' => 'شباشب',
+                'image' => 'categories/slippers.jpg',
+                'image_url' => 'https://loremflickr.com/900/600/slippers?lock=102',
+                'status' => 1,
             ],
         ];
-        foreach ($categories as $category) {
-            Category::firstOrCreate(
-                ['name_en' => $category['name_en']],
-                $category
+
+        Storage::disk('public')->makeDirectory('categories');
+
+        foreach ($categories as $item) {
+
+            $imagePath = $item['image'];
+
+            if (!Storage::disk('public')->exists($imagePath)) {
+                try {
+                    $response = Http::timeout(30)
+                        ->withHeaders([
+                            'User-Agent' => 'Mozilla/5.0',
+                        ])
+                        ->get($item['image_url']);
+
+                    if ($response->successful()) {
+                        Storage::disk('public')->put(
+                            $imagePath,
+                            $response->body()
+                        );
+
+                        $this->command?->info(
+                            "✓ Category image downloaded: {$item['name_en']}"
+                        );
+                    } else {
+                        $this->command?->warn(
+                            "⚠ Failed category image: {$item['name_en']}"
+                        );
+                    }
+                } catch (\Throwable $e) {
+                    $this->command?->warn(
+                        "⚠ Category image error: {$item['name_en']}"
+                    );
+                }
+            }
+
+            Category::updateOrCreate(
+                [
+                    'name_en' => $item['name_en'],
+                ],
+                [
+                    'name_ar' => $item['name_ar'],
+                    'image' => $imagePath,
+                    'status' => $item['status'],
+                ]
             );
         }
     }

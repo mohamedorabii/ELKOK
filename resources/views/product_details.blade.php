@@ -210,6 +210,7 @@
                     <div class="col-lg-4 col-md-6 mb-4">
                         <div class="single-product">
                             <div class="product-img">
+
                                 @if ($related->stock_quantity > 0)
                                     <span class="badge badge-success"
                                         style="position:absolute;top:10px;left:10px;font-size:13px;padding:6px 12px;border-radius:20px;z-index:10;">
@@ -222,8 +223,11 @@
                                     </span>
                                 @endif
 
-                                <img class="related-product-img" src="{{ asset('storage/' . $related->image) }}"
-                                    alt="{{ $related->name }}">
+                                {{-- الصورة تفتح Product Details --}}
+                                <a href="{{ route('product.details', $related->id) }}" class="d-block">
+                                    <img class="related-product-img" src="{{ asset('storage/' . $related->image) }}"
+                                        alt="{{ $related->name }}">
+                                </a>
 
                                 <div class="p_icon">
                                     <a href="{{ route('product.details', $related->id) }}"
@@ -243,6 +247,7 @@
                                         </a>
                                     @endif
                                 </div>
+
                             </div>
 
                             <div class="product-btm">
@@ -280,10 +285,10 @@
         </div>
     </section>
 
-   @if ($product->has_variants)
-    @push('scripts')
-        <script src="{{ asset('new-template/js/product-details.js') }}"></script>
-    @endpush
-@endif
+    @if ($product->has_variants)
+        @push('scripts')
+            <script src="{{ asset('new-template/js/product-details.js') }}"></script>
+        @endpush
+    @endif
 
 @endsection

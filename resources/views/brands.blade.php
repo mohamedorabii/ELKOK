@@ -36,8 +36,11 @@
                     <div class="col-lg-4 col-md-6 mb-4 text-center">
                         <div class="single-product">
                             <div class="product-img">
-                                <img class="img-fluid w-100" src="{{ asset('storage/' . $brand->image) }}"
-                                    alt="{{ $brand->name }}" />
+                               <a href="{{ route('products.brand', $brand->id) }}" class="brand-image-link">
+    <img class="img-fluid w-100"
+        src="{{ asset('storage/' . $brand->image) }}"
+        alt="{{ $brand->name }}" />
+</a>
                                 <div class="p_icon">
                                     <a href="{{ route('products.brand', $brand->id) }}" title="{{ __('store.common.browse_brand') }}">
                                         <i class="ti-eye"></i>

@@ -36,9 +36,11 @@
             <div class="col-lg-4 col-md-6 mb-4 text-center">
                 <div class="single-product">
                     <div class="product-img">
-                        <img class="img-fluid w-100"
-                            src="{{ asset('storage/' . $subcategory->image) }}"
-                            alt="{{ $subcategory->name }}" />
+                        <a href="{{ route('subcategories.products', $subcategory->id) }}" class="subcategory-image-link">
+    <img class="img-fluid w-100"
+        src="{{ asset('storage/' . $subcategory->image) }}"
+        alt="{{ $subcategory->name }}" />
+</a>
                         <div class="p_icon">
                             <a href="{{ route('subcategories.products', $subcategory->id) }}" title="{{ __('store.common.view') }}">
                                 <i class="ti-eye"></i>
