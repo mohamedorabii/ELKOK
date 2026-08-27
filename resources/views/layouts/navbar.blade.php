@@ -1,35 +1,5 @@
 <header class="header_area">
-    <div class="top_menu">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-7">
-                    <div class="float-left">
-                        <p>{{ __('store.pages.contact.phone') }}: +201281856592</p>
-                        <p>{{ __('store.common.email') }}: devmohamedalaaoraby@gmail.com</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-5">
-                    <div class="float-right">
-                        <ul class="right_side">
-                            <li><a href="{{ route('cart.index') }}">{{ __('store.nav.cart') }}</a></li>
-                            <li><a href="{{ route('contact') }}">{{ __('store.nav.contact') }}</a></li>
-                           <li>
-    <a href="{{ route('language.switch', ['locale' => app()->getLocale() === 'en' ? 'ar' : 'en']) }}"
-        title="{{ app()->getLocale() === 'en' ? __('store.switch_to_ar') : __('store.switch_to_en') }}"
-        style="display:inline-flex; align-items:center; gap:5px;">
-        <i class="ti-world"></i>
-        {{ strtoupper(app()->getLocale() === 'en' ? 'ar' : 'en') }}
-    </a>
-</li>>
-
-                            
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="main_menu">
         <div class="container">
@@ -121,45 +91,56 @@
 
                             <ul class="nav navbar-nav navbar-right right_nav pull-right">
 
-                                {{-- Search --}}
-                                <li class="nav-item search-nav-item">
+                                <!--
+<li class="nav-item search-nav-item">
 
-                                    <div class="search-wrapper" data-live-search-url="{{ route('search.live') }}"
-                                        data-search-url="{{ route('search') }}">
+    <div class="search-wrapper" data-live-search-url="{{ route('search.live') }}"
+        data-search-url="{{ route('search') }}">
 
-                                        <form action="{{ route('search') }}" method="GET">
+        <form action="{{ route('search') }}" method="GET">
 
-                                            <input type="text" id="live-search-input" name="q"
-                                                placeholder="{{ __('store.search_placeholder') }}" autocomplete="off" value="{{ request('q') }}">
+            <input type="text" id="live-search-input" name="q"
+                placeholder="{{ __('store.search_placeholder') }}" autocomplete="off" value="{{ request('q') }}">
 
-                                            <button type="submit">
-                                                <i class="ti-search"></i>
-                                            </button>
+            <button type="submit">
+                <i class="ti-search"></i>
+            </button>
 
-                                        </form>
+        </form>
 
-                                        <div id="search-dropdown">
+        <div id="search-dropdown">
 
-                                            <div id="search-results"></div>
+            <div id="search-results"></div>
 
-                                            <div id="search-all">
-                                                <a href="#" id="search-all-link">
-                                                    {{ __('store.view_all_results') }}
-                                                </a>
-                                            </div>
+            <div id="search-all">
+                <a href="#" id="search-all-link">
+                    {{ __('store.view_all_results') }}
+                </a>
+            </div>
 
-                                        </div>
+        </div>
 
-                                    </div>
+    </div>
 
-                                </li>
+</li>
+-->
 
-                                {{-- Cart --}}
-                                <li class="nav-item">
-                                    <a href="{{ route('cart.index') }}" class="icons">
-                                        <i class="ti-shopping-cart"></i>
-                                    </a>
-                                </li>
+                              {{-- Language --}}
+<li class="nav-item">
+    <a href="{{ route('language.switch', ['locale' => app()->getLocale() === 'en' ? 'ar' : 'en']) }}"
+        class="icons"
+        title="{{ app()->getLocale() === 'en' ? __('store.switch_to_ar') : __('store.switch_to_en') }}">
+        <i class="ti-world"></i>
+        {{ strtoupper(app()->getLocale() === 'en' ? 'ar' : 'en') }}
+    </a>
+</li>
+
+{{-- Cart --}}
+<li class="nav-item">
+    <a href="{{ route('cart.index') }}" class="icons">
+        <i class="ti-shopping-cart"></i>
+    </a>
+</li>
 
                                 {{-- User --}}
                                 <li class="nav-item">
