@@ -32,112 +32,50 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-4 col-md-6 mb-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <div class="single-feature text-center">
-                        <a class="title">
-                            <i class="ti-home"></i>
-                            <h3>{{ __('store.pages.contact.address') }}</h3>
+                        <a href="#" target="_blank" class="title">
+                            <i class="ti-facebook"></i>
+                            <h3>Facebook</h3>
                         </a>
-                        <p>Beni Suef, Egypt</p>
+                        <p><a href="#" target="_blank">{{ __('store.pages.contact.follow_us') }}</a></p>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <div class="single-feature text-center">
-                        <a href="mailto:devmohamedalaaoraby@gmail.com" class="title">
-                            <i class="ti-email"></i>
-                            <h3>{{ __('store.pages.contact.email') }}</h3>
+                        <a href="#" target="_blank" class="title">
+                            <i class="ti-instagram"></i>
+                            <h3>Instagram</h3>
                         </a>
-                        <p><a href="mailto:devmohamedalaaoraby@gmail.com">devmohamedalaaoraby@gmail.com</a></p>
+                        <p><a href="#" target="_blank">{{ __('store.pages.contact.follow_us') }}</a></p>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <div class="single-feature text-center">
-                        <a href="tel:+201281856592" class="title">
+                        <a href="#" target="_blank" class="title">
+                            <span class="ti-tiktok-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M16.6 0h-3.3v15.4c0 1.63-1.32 2.96-2.96 2.96s-2.96-1.33-2.96-2.96 1.32-2.96 2.96-2.96c.31 0 .6.05.88.13V9.2c-.29-.04-.58-.06-.88-.06-3.4 0-6.16 2.76-6.16 6.16S6.99 21.46 10.4 21.46s6.16-2.76 6.16-6.16V8.05c1.27.91 2.83 1.45 4.5 1.45V6.2c-2.53 0-4.58-2.05-4.46-4.58V0h0Z"/></svg>
+                            </span>
+                            <h3>TikTok</h3>
+                        </a>
+                        <p><a href="#" target="_blank">{{ __('store.pages.contact.follow_us') }}</a></p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="single-feature text-center">
+                        <a href="https://wa.me/201040522867" target="_blank" class="title">
                             <i class="ti-mobile"></i>
-                            <h3>{{ __('store.pages.contact.phone') }}</h3>
+                            <h3>WhatsApp</h3>
                         </a>
-                        <p><a href="tel:+201281856592">+20 128 185 6592</a></p>
+                        <p><a href="https://wa.me/201040522867" target="_blank">+20 104 052 2867</a></p>
                     </div>
                 </div>
             </div>
 
-            <div class="row mt-4">
-                <div class="col-lg-8 mb-4 mb-lg-0">
-                    <h2 class="contact-title mb-4">{{ __('store.pages.contact.send_message') }}</h2>
-                    @if (session('success'))
-                        <div class="alert alert-success mb-3">{{ session('success') }}</div>
-                    @endif
-
-                    @if ($errors->any())
-                        <div class="alert alert-danger mb-3">
-                            @foreach ($errors->all() as $error)
-                                <p class="mb-0">{{ $error }}</p>
-                            @endforeach
-                        </div>
-                    @endif
-
-                    <form class="form-contact" action="{{ route('contact.send') }}" method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <textarea class="form-control w-100" name="message" cols="30" rows="9" placeholder="{{ __('store.pages.contact.message') }}">{{ old('message') }}</textarea>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input class="form-control" name="name" type="text" placeholder="{{ __('store.pages.contact.your_name') }}"
-                                        value="{{ old('name') }}">
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input class="form-control" name="email" type="email"
-                                        placeholder="{{ __('store.pages.contact.email_address') }}" value="{{ old('email') }}">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <input class="form-control" name="subject" type="text" placeholder="{{ __('store.pages.contact.subject') }}"
-                                        value="{{ old('subject') }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <button type="submit" class="main_btn">{{ __('store.pages.contact.send') }}</button>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="col-lg-4">
-                    <h2 class="contact-title mb-4">{{ __('store.pages.contact.follow_us') }}</h2>
-                    <div class="media contact-info">
-                        <span class="contact-info__icon"><i class="ti-facebook"></i></span>
-                        <div class="media-body">
-                            <a href="https://www.facebook.com/share/1CfcigUQ94/" target="_blank">Facebook</a>
-                        </div>
-                    </div>
-                    <div class="media contact-info">
-                        <span class="contact-info__icon"><i class="ti-linkedin"></i></span>
-                        <div class="media-body">
-                            <a href="https://www.linkedin.com/in/mohamedalaaorabii" target="_blank">LinkedIn</a>
-                        </div>
-                    </div>
-                    <div class="media contact-info">
-                        <span class="contact-info__icon"><i class="ti-github"></i></span>
-                        <div class="media-body">
-                            <a href="https://github.com/mohamedorabiii" target="_blank">GitHub</a>
-                        </div>
-                    </div>
-                    <div class="media contact-info">
-                        <span class="contact-info__icon"><i class="ti-mobile"></i></span>
-                        <div class="media-body">
-                            <a href="https://wa.me/201281856592" target="_blank">WhatsApp</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <style>
+                .single-feature .ti-tiktok-icon{display:inline-block;line-height:1;}
+            </style>
 
         </div>
     </section>
