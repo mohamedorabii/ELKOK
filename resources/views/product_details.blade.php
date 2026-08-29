@@ -57,8 +57,11 @@
 
                 <div class="col-lg-6">
                     <div class="s_product_img text-center">
-                        <img id="product-main-image" class="img-fluid product-details-img"
-                            src="{{ $galleryImages->first() }}" alt="{{ $product->name }}">
+                       <img id="product-main-image"
+    class="img-fluid product-details-img"
+    src="{{ $galleryImages->first() }}"
+    alt="{{ $product->name }}"
+    decoding="async">
                     </div>
 
                     @if ($galleryImages->count() > 1)
@@ -67,8 +70,11 @@
                                 <button type="button" class="btn btn-light p-0 border gallery-thumb"
                                     data-image="{{ $galleryImage }}"
                                     style="width:72px;height:72px;overflow:hidden;border-radius:12px;">
-                                    <img src="{{ $galleryImage }}" alt="{{ $product->name }}"
-                                        style="width:100%;height:100%;object-fit:cover;">
+                                   <img src="{{ $galleryImage }}"
+    alt="{{ $product->name }}"
+    loading="lazy"
+    decoding="async"
+    style="width:100%;height:100%;object-fit:cover;">
                                 </button>
                             @endforeach
                         </div>
@@ -225,8 +231,11 @@
 
                                 {{-- الصورة تفتح Product Details --}}
                                 <a href="{{ route('product.details', $related->id) }}" class="d-block">
-                                    <img class="related-product-img" src="{{ asset('storage/' . $related->image) }}"
-                                        alt="{{ $related->name }}">
+                                   <img class="related-product-img"
+    src="{{ asset('storage/' . $related->image) }}"
+    alt="{{ $related->name }}"
+    loading="lazy"
+    decoding="async">
                                 </a>
 
                                 <div class="p_icon">

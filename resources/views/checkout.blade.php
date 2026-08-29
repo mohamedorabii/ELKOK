@@ -165,7 +165,12 @@
     </div>
 </section>
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('new-template/vendors/nice-select/css/nice-select.css') }}" />
+@endpush
+
 @push('scripts')
+    <script src="{{ asset('new-template/vendors/nice-select/js/jquery.nice-select.min.js') }}"></script>
     <script src="{{ asset('new-template/js/checkout.js') }}"></script>
 @endpush
 

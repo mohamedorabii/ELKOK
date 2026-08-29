@@ -39,7 +39,9 @@
                                <a href="{{ route('products.brand', $brand->id) }}" class="brand-image-link">
     <img class="img-fluid w-100"
         src="{{ asset('storage/' . $brand->image) }}"
-        alt="{{ $brand->name }}" />
+        alt="{{ $brand->name }}"
+        loading="lazy"
+        decoding="async" />
 </a>
                                 <div class="p_icon">
                                     <a href="{{ route('products.brand', $brand->id) }}" title="{{ __('store.common.browse_brand') }}">

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'app_name' => 'OrabyStore',
+    'app_name' => 'ELKOK',
     'currency' => 'EGP',
     'search_placeholder' => 'Search...',
     'view_all_results' => 'View all results',
@@ -83,6 +83,7 @@ return [
             'always_support' => 'Always support',
             'secure_payment' => 'Secure payment',
             'latest_products' => 'Latest Products',
+            'view_all_products' => 'All Products',
         ],
         'products' => [
             'title' => 'Products',
@@ -198,14 +199,14 @@ return [
             'new_password' => 'New Password',
             'enter_code' => 'Enter 6-digit code',
         ],
-        'footer' => [
-            'about_title' => 'About OrabyStore',
-            'about_text' => 'OrabyStore is a modern e-commerce platform built with Laravel, providing a secure, fast and user-friendly online shopping experience.',
-            'developer' => 'Developed by',
-            'quick_links' => 'Quick Links',
-            'shop' => 'Shop',
-            'contact' => 'Contact',
-            'all_rights' => 'All rights reserved.',
+       'footer' => [
+        'about_title' => 'About ELKOK',
+        'about_text' => 'ELKOK is your go-to store for the latest shoes and sneakers, offering a wide selection of top-quality footwear at great prices, with a fast, secure and easy shopping experience.',
+        'developer' => 'Developed by',
+        'quick_links' => 'Quick Links',
+        'shop' => 'Shop',
+        'contact' => 'Contact',
+        'all_rights' => 'All rights reserved.',
         ],
         'checkout_confirmation' => [
             'title' => 'Your order has been placed successfully',

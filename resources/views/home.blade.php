@@ -5,16 +5,16 @@
 @section('content')
 
     {{-- ELKOK Banner --}}
-<section class="home_banner_area mb-40 elkok-banner">
-    <div class="elkok-banner-bg"></div>
+    <section class="home_banner_area mb-40 elkok-banner">
+        <div class="elkok-banner-bg"></div>
 
-    <div class="elkok-banner-content">
-        <a href="{{ route('products') }}" class="main_btn elkok-shop-btn">
-            {{ __('store.pages.home.view_collection') }}
-            <span>→</span>
-        </a>
-    </div>
-</section>
+        <div class="elkok-banner-content">
+            <a href="{{ route('products') }}" class="main_btn elkok-shop-btn">
+                {{ __('store.pages.home.view_collection') }}
+                <span>→</span>
+            </a>
+        </div>
+    </section>
 
     {{-- Features --}}
     <section class="feature-area section_gap_bottom_custom">
@@ -67,22 +67,7 @@
                 </div>
             </div>
 
-            {{-- Category Filter --}}
-            <div class="row mb-4">
-                <div class="col-12 text-center">
-                    <a href="{{ route('home') }}">
-                        <button
-                            class="main_btn {{ !request()->route('id') ? '' : 'btn-outline' }}">{{ __('store.common.all') }}</button>
-                    </a>
-                    @foreach ($categories as $category)
-                        <a href="{{ route('home.category', $category->id) }}">
-                            <button class="main_btn {{ request()->route('id') == $category->id ? '' : 'btn-outline' }}">
-                                {{ $category->name }}
-                            </button>
-                        </a>
-                    @endforeach
-                </div>
-            </div>
+           
 
             <div class="row">
                 @foreach ($products as $product)
@@ -92,11 +77,10 @@
 
                             <div class="product-img">
 
-                              <a href="{{ route('product.details', $product->id) }}" class="product-image-link">
-    <img class="img-fluid w-100"
-        src="{{ asset('storage/' . $product->image) }}"
-        alt="{{ $product->name }}" />
-</a>
+                                <a href="{{ route('product.details', $product->id) }}" class="product-image-link">
+                                    <img class="img-fluid w-100" src="{{ asset('storage/' . $product->image) }}"
+                                        alt="{{ $product->name }}" loading="lazy" decoding="async" />
+                                </a>
 
                                 @if ($product->stock_quantity > 0)
                                     <span class="badge badge-success"
@@ -122,7 +106,7 @@
                                             title="{{ __('store.common.choose_options') }}">
                                             <i class="ti-list"></i>
                                         </a>
-                                    @elseif (! $product->has_variants && $product->stock_quantity > 0)
+                                    @elseif (!$product->has_variants && $product->stock_quantity > 0)
                                         <a href="#" class="cart-trigger" data-form="cart-form-{{ $product->id }}"
                                             title="{{ __('store.common.add_to_cart') }}">
                                             <i class="ti-shopping-cart"></i>
@@ -169,9 +153,21 @@
                     </div>
                 @endforeach
             </div>
+                        {{-- View All Button --}}
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <a href="{{ route('products') }}">
+                        <button class="main_btn">
+                            {{ __('store.pages.home.view_all_products') }}
+                            <span>→</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
-@push('styles')
-    <link rel="stylesheet" href="{{ asset('new-template/css/elkok-banner.css') }}">
-@endpush
+
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('new-template/css/elkok-banner.css') }}">
+    @endpush
 @endsection

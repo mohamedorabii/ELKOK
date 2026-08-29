@@ -74,4 +74,11 @@
     .elkok-shop-btn span {
         font-size: 16px;
     }
+    .view-all-btn {
+    display: inline-block;
+    width: auto;
+    padding: 12px 32px;
+    font-size: 14px;
+}
+
 }

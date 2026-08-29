@@ -12,8 +12,11 @@
                 </p>
 
                 <p class="mt-3">
-                    {{ __('store.pages.footer.developer') }} <strong>Mohamed Alaa Oraby</strong>
-                </p>
+    {{ __('store.pages.footer.developer') }}
+    <a href="https://www.facebook.com/share/1CfcigUQ94/" target="_blank">
+        <strong>Mohamed Alaa Orabii</strong>
+    </a>
+</p>
             </div>
 
             {{-- Quick Links --}}
@@ -70,13 +73,10 @@
 
                 <p>
                     <i class="fa fa-phone mr-2"></i>
-                    +20 128 185 6592
+                    +20 104 052 2867
                 </p>
 
-                <p>
-                    <i class="fa fa-envelope mr-2"></i>
-                    devmohamedalaaoraby@gmail.com
-                </p>
+                
 
                 <p>
                     <i class="fa fa-map-marker mr-2"></i>
@@ -105,15 +105,7 @@
                     <i class="fa fa-facebook"></i>
                 </a>
 
-                <a href="https://www.linkedin.com/in/mohamedalaaorabii" target="_blank">
-                    <i class="fa fa-linkedin"></i>
-                </a>
-
-                <a href="https://github.com/mohamedorabii" target="_blank">
-                    <i class="fa fa-github"></i>
-                </a>
-
-                <a href="https://wa.me/201281856592" target="_blank">
+                <a href="https://wa.me/201040522867" target="_blank">
                     <i class="fa fa-whatsapp"></i>
                 </a>
 

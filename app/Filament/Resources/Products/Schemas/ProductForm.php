@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Products\Schemas;
 
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Schemas\Schema;
@@ -25,8 +26,9 @@ class ProductForm
                     ->numeric()
                     ->prefix('$'),
                 TextInput::make('code')
-                    ->unique()
-                    ->required(),
+                    ->disabled()
+                    ->dehydrated(false)
+                    ->visibleOn('edit'),
                 FileUpload::make('image')
                     ->label('Product Image')
                     ->disk('public')
@@ -60,7 +62,13 @@ class ProductForm
                 TextInput::make('quantity')
                     ->required()
                     ->numeric()
-                    ->minValue(0),
+                    ->minValue(0)
+                    ->live()
+                    ->helperText(function (Get $get) {
+                        $variants = collect($get('variants') ?? []);
+                        $total = $variants->sum(fn($v) => (int) ($v['stock'] ?? 0));
+                        return $total > 0 ? "مجموع الستوك الحالي في الفاريانتس: {$total}" : null;
+                    }),
                 Select::make('status')
                     ->label('Status')
                     ->required()
@@ -100,7 +108,19 @@ class ProductForm
                             ->numeric()
                             ->minValue(0)
                             ->default(0)
-                            ->required(),
+                            ->required()
+                            ->live(onBlur: true)
+                            ->rule(function (Get $get) {
+                                return function (string $attribute, $value, \Closure $fail) use ($get) {
+                                    $quantity = (int) ($get('../../quantity') ?? 0);
+                                    $variants = collect($get('../../variants') ?? []);
+                                    $total    = $variants->sum(fn($v) => (int) ($v['stock'] ?? 0));
+
+                                    if ($total > $quantity) {
+                                        $fail("مجموع الستوك في كل الفاريانتس ({$total}) أكبر من الكمية الكلية المسموحة ({$quantity}).");
+                                    }
+                                };
+                            }),
                         TextInput::make('price')
                             ->label('Price')
                             ->numeric()
@@ -108,7 +128,9 @@ class ProductForm
                             ->prefix('$'),
                         TextInput::make('sku')
                             ->label('SKU')
-                            ->maxLength(255),
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->visibleOn('edit'),
                     ])
                     ->columnSpanFull()
             ]);

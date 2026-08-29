@@ -13,11 +13,6 @@
     <link rel="stylesheet" href="{{ asset('new-template/css/font-awesome.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('new-template/css/themify-icons.css') }}" />
     <link rel="stylesheet" href="{{ asset('new-template/css/flaticon.css') }}" />
-    <link rel="stylesheet" href="{{ asset('new-template/vendors/owl-carousel/owl.carousel.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('new-template/vendors/lightbox/simpleLightbox.css') }}" />
-    <link rel="stylesheet" href="{{ asset('new-template/vendors/nice-select/css/nice-select.css') }}" />
-    <link rel="stylesheet" href="{{ asset('new-template/vendors/animate-css/animate.css') }}" />
-    <link rel="stylesheet" href="{{ asset('new-template/vendors/jquery-ui/jquery-ui.css') }}" />
     <link rel="stylesheet" href="{{ asset('new-template/css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('new-template/css/responsive.css') }}" />
     <link rel="stylesheet" href="{{ asset('new-template/css/main.css') }}" />
@@ -41,16 +36,6 @@
     <script src="{{ asset('new-template/js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('new-template/js/popper.js') }}"></script>
     <script src="{{ asset('new-template/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('new-template/js/stellar.js') }}"></script>
-    <script src="{{ asset('new-template/vendors/lightbox/simpleLightbox.min.js') }}"></script>
-    <script src="{{ asset('new-template/vendors/nice-select/js/jquery.nice-select.min.js') }}"></script>
-    <script src="{{ asset('new-template/vendors/isotope/imagesloaded.pkgd.min.js') }}"></script>
-    <script src="{{ asset('new-template/vendors/isotope/isotope-min.js') }}"></script>
-    <script src="{{ asset('new-template/vendors/owl-carousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('new-template/js/jquery.ajaxchimp.min.js') }}"></script>
-    <script src="{{ asset('new-template/vendors/counter-up/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('new-template/vendors/counter-up/jquery.counterup.js') }}"></script>
-    <script src="{{ asset('new-template/js/mail-script.js') }}"></script>
     <script src="{{ asset('new-template/js/theme.js') }}"></script>
     <script src="{{ asset('new-template/js/main.js') }}"></script>
     <script src="{{ asset('new-template/js/cart.js') }}"></script>

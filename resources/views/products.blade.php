@@ -37,10 +37,10 @@
                         <div class="single-product">
                             <div class="product-img">
                                 <a href="{{ route('product.details', $product->id) }}" class="product-image-link">
-    <img class="related-product-img"
-        src="{{ filter_var($product->image, FILTER_VALIDATE_URL) ? $product->image : asset('storage/' . $product->image) }}"
-        alt="{{ $product->name }}" />
-</a>
+                                    <img class="related-product-img"
+                                        src="{{ filter_var($product->image, FILTER_VALIDATE_URL) ? $product->image : asset('storage/' . $product->image) }}"
+                                        alt="{{ $product->name }}" loading="lazy" decoding="async" />
+                                </a>
 
                                 @if ($product->stock_quantity > 0)
                                     <span class="badge badge-success"
@@ -110,7 +110,8 @@
             @if ($products->hasPages())
                 <div class="row mt-4">
                     <div class="col-12 text-center">
-                        <ul style="display:flex; gap:10px; justify-content:center; list-style:none; padding:0;">
+                        <ul
+                            style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; list-style:none; padding:0;">
                             @if ($products->onFirstPage())
                                 <li><span class="main_btn" style="opacity:0.5; cursor:not-allowed;">←
                                         {{ __('store.common.prev') }}</span></li>

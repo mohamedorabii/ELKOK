@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -52,6 +53,12 @@ class Product extends Model
 
     protected static function booted()
     {
+        static::creating(function ($product) {
+            if (empty($product->code)) {
+                $product->code = static::generateUniqueCode($product);
+            }
+        });
+
         static::deleting(function ($product) {
             if ($product->image && Storage::disk('public')->exists($product->image)) {
                 Storage::disk('public')->delete($product->image);
@@ -65,6 +72,28 @@ class Product extends Model
                 }
             }
         });
+    }
+
+    protected static function generateUniqueCode($product): string
+    {
+        $brandPart = 'PRD';
+        if ($product->brand_id) {
+            $brandName = Brand::find($product->brand_id)?->name_en ?? '';
+            $brandPart = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $brandName), 0, 3)) ?: 'PRD';
+        }
+
+        $namePart = strtoupper(substr(preg_replace('/[^A-Za-z]/', '', $product->name_en ?? ''), 0, 4)) ?: 'ITEM';
+
+        $baseCode = "{$brandPart}-{$namePart}";
+        $code     = $baseCode;
+        $counter  = 1;
+
+        while (static::where('code', $code)->exists()) {
+            $counter++;
+            $code = "{$baseCode}{$counter}";
+        }
+
+        return $code;
     }
 
     public function getNameAttribute(): string

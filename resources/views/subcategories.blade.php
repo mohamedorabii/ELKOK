@@ -37,9 +37,11 @@
                 <div class="single-product">
                     <div class="product-img">
                         <a href="{{ route('subcategories.products', $subcategory->id) }}" class="subcategory-image-link">
-    <img class="img-fluid w-100"
-        src="{{ asset('storage/' . $subcategory->image) }}"
-        alt="{{ $subcategory->name }}" />
+   <img class="img-fluid w-100"
+    src="{{ asset('storage/' . $subcategory->image) }}"
+    alt="{{ $subcategory->name }}"
+    loading="lazy"
+    decoding="async" />
 </a>
                         <div class="p_icon">
                             <a href="{{ route('subcategories.products', $subcategory->id) }}" title="{{ __('store.common.view') }}">
@@ -58,33 +60,41 @@
             @endforeach
         </div>
 
-        @if ($subcategories->hasPages())
-        <div class="row mt-4">
-            <div class="col-12 text-center">
-                <ul class="pagination-list">
-                    @if ($subcategories->onFirstPage())
-                        <li><span class="main_btn btn-disabled">← {{ __('store.common.prev') }}</span></li>
-                    @else
-                        <li><a href="{{ $subcategories->previousPageUrl() }}" class="main_btn">← {{ __('store.common.prev') }}</a></li>
-                    @endif
+       @if ($subcategories->hasPages())
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <ul
+                style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center; list-style:none; padding:0;">
+                @if ($subcategories->onFirstPage())
+                    <li><span class="main_btn" style="opacity:0.5; cursor:not-allowed;">←
+                            {{ __('store.common.prev') }}</span></li>
+                @else
+                    <li><a href="{{ $subcategories->previousPageUrl() }}" class="main_btn">←
+                            {{ __('store.common.prev') }}</a></li>
+                @endif
 
-                    @foreach ($subcategories->getUrlRange(1, $subcategories->lastPage()) as $page => $url)
-                        @if ($page == $subcategories->currentPage())
-                            <li><span class="main_btn">{{ $page }}</span></li>
-                        @else
-                            <li><a href="{{ $url }}" class="main_btn btn-outline-page">{{ $page }}</a></li>
-                        @endif
-                    @endforeach
-
-                    @if ($subcategories->hasMorePages())
-                        <li><a href="{{ $subcategories->nextPageUrl() }}" class="main_btn">{{ __('store.common.next') }} →</a></li>
+                @foreach ($subcategories->getUrlRange(1, $subcategories->lastPage()) as $page => $url)
+                    @if ($page == $subcategories->currentPage())
+                        <li><span class="main_btn">{{ $page }}</span></li>
                     @else
-                        <li><span class="main_btn btn-disabled">{{ __('store.common.next') }} →</span></li>
+                        <li><a href="{{ $url }}" class="main_btn"
+                                style="background:#fff; color:#333; border:1px solid #ddd;">{{ $page }}</a>
+                        </li>
                     @endif
-                </ul>
-            </div>
+                @endforeach
+
+                @if ($subcategories->hasMorePages())
+                    <li><a href="{{ $subcategories->nextPageUrl() }}"
+                            class="main_btn">{{ __('store.common.next') }} →</a></li>
+                @else
+                    <li><span class="main_btn"
+                            style="opacity:0.5; cursor:not-allowed;">{{ __('store.common.next') }} →</span>
+                    </li>
+                @endif
+            </ul>
         </div>
-        @endif
+    </div>
+@endif
 
     </div>
 </section>

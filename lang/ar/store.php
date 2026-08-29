@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'app_name' => 'أورابي ستور',
+    'app_name' => 'ELKOK',
     'currency' => 'جنيه',
     'search_placeholder' => 'ابحث...',
     'view_all_results' => 'عرض جميع النتائج',
@@ -83,6 +83,7 @@ return [
             'always_support' => 'دعم دائم',
             'secure_payment' => 'دفع آمن',
             'latest_products' => 'أحدث المنتجات',
+            'view_all_products' => 'كل المنتجات',
         ],
         'products' => [
             'title' => 'المنتجات',
@@ -199,9 +200,8 @@ return [
             'enter_code' => 'أدخل رمز من 6 أرقام',
         ],
         'footer' => [
-            'about_title' => 'حول أورابي ستور',
-            'about_text' => 'أورابي ستور منصة تسوق إلكتروني حديثة مبنية على لارافيل، وتقدم تجربة تسوق آمنة وسريعة وسهلة الاستخدام.',
-            'developer' => 'تم التطوير بواسطة',
+            'about_title' => 'حول ELKOK',
+'about_text' => 'ELKOK متجرك الأول لأحدث صيحات الأحذية والكوتشيات، بنقدملك تشكيلة متنوعة بأفضل جودة وأسعار، مع تجربة تسوق سهلة وآمنة وتوصيل سريع.',            'developer' => 'تم التطوير بواسطة',
             'quick_links' => 'روابط سريعة',
             'shop' => 'المتجر',
             'contact' => 'تواصل معنا',
@@ -228,7 +228,7 @@ return [
             'view_all_orders' => 'عرض كل طلباتي',
             'whatsapp_message' => "مرحبًا، أرغب في إرسال إيصال الدفع لطلب رقم #:order_number\nالإجمالي: :total",
             'payment_link' => 'رابط الدفع',
-'click_to_transfer' => 'اضغط للتحويل',
+            'click_to_transfer' => 'اضغط للتحويل',
         ],
     ],
     'alerts' => [
